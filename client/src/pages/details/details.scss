@@ -1,0 +1,53 @@
+page-details {
+    .top {
+        position         : relative;
+        width            : 100%;
+        height           : 24%;
+        background-color : $eucalyptus;
+        text-align       : center;
+
+        .close-icon {
+            position : absolute;
+            top      : 20px;
+            right    : 15px;
+        }
+
+        .title {
+            position  : absolute;
+            bottom    : 10px;
+            width     : 100%;
+            margin    : 0 !important;
+            padding   : 0 !important;
+            color     : $pink;
+            font-size : 25px;
+        }
+    }
+
+    .content {
+        width            : 100%;
+        height           : 100%;
+        padding-top      : 20px;
+        background-color : $eucalyptus;
+    }
+
+    .bottom {
+        position         : absolute;
+        bottom           : 0;
+        width            : 100%;
+        min-height       : 40%;
+        background-color : $eucalyptus;
+    }
+
+    .play-icon {
+        position    : absolute;
+        left        : 40%;
+        width       : 20%;
+        padding-top : 20px;
+    }
+
+    .description {
+        padding   : 110px 20px 0 20px;
+        color     : white;
+        font-size : 17px;
+    }
+}

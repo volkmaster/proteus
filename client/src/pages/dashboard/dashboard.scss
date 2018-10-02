@@ -1,0 +1,53 @@
+page-dashboard {
+    .content {
+        width            : 100%;
+        background-color : $pink;
+        overflow-y       : scroll;
+
+        ion-spinner * {
+            width  : 50px !important;
+            height : 50px !important;
+            stroke : $tundora;
+            fill   : $mine-shaft;
+        }
+
+        .header {
+            padding         : 10px;
+            display         : flex;
+            justify-content : center;
+            text-align      : center;
+
+            .logo {
+                height: 70px;
+            }
+        }
+
+        .loader {
+            width        : 50%;
+            margin-left  : auto;
+            margin-right : auto;
+            padding-top  : 150px;
+            display      : block;
+        }
+
+        .button {
+            height           : 70px;
+            font-family      : $font-bold;
+            display          : flex;
+            justify-content  : center;
+            align-items      : center;
+            color            : $pink;
+            font-size        : 30px;
+        }
+
+        .button-maps {
+            margin-top       : 10px;
+            background-color : $pomegranate;
+        }
+
+        .button-qr-code {
+            margin           : 20px 0;
+            background-color : $eucalyptus;
+        }
+    }
+}

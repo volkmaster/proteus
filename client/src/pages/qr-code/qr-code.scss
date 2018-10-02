@@ -1,0 +1,29 @@
+ion-content, body, .app-root, ion-app, ion-nav, .ion-page, .scroll-content, .fixed-content, page-app {
+    background: none transparent !important;
+}
+
+page-qr-code {
+    .top {
+        position         : absolute;
+        top              : 0;
+        z-index          : 101;
+        height           : 30%;
+        width            : 100%;
+        background-color : $eucalyptus;
+    }
+
+    .bottom {
+        position         : absolute;
+        bottom           : 0;
+        z-index          : 101;
+        width            : 100%;
+        min-height       : 30%;
+        background-color : $eucalyptus;
+    }
+
+    .close-icon {
+        position : absolute;
+        top      : 15px;
+        right    : 15px;
+    }
+}

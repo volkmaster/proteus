@@ -1,0 +1,54 @@
+{
+    "name": "Proteus",
+    "version": "0.0.1",
+    "description": "API of tourist assistant application named Proteus.",
+    "contributors": [
+        {
+            "name": "Tina Avbelj",
+            "email": "tina.avbelj@gmail.com"
+        },
+        {
+            "name": "Matevz Lenic",
+            "email": "matevz.lenic@gmail.com"
+        },
+        {
+            "name": "Pavlin Policar",
+            "email": "pavlin.g.p@gmail.com"
+        },
+        {
+            "name": "Ziga Vucko",
+            "email": "ziga.vucko@gmail.com",
+            "url": "http://gep.si"
+        }
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/volkmaster/proteus"
+    },
+    "license": "MIT",
+    "private": true,
+    "scripts": {
+        "dev": "DEBUG=proteus:* npm run lint && babel-watch --exclude ./dist,./node_modules,./LICENSE.txt,./package-lock.json,./package.json app.js",
+        "debug": "DEBUG=proteus:* babel-watch --exclude ./dist,./node_modules,./LICENSE.txt,./package-lock.json,./package.json app.js --debug-brk --inspect app.js",
+        "start": "npm run build && node ./dist/app.js",
+        "build": "rimraf dist/ && babel ./ --out-dir dist/ --ignore ./node_modules,./LICENSE.txt,./package-lock.json,./package.json --copy-files",
+        "lint": "eslint --max-warnings 0 -c .eslintrc.json app.js controllers/ logic/ utils/"
+    },
+    "main": "./dist/app.js",
+    "dependencies": {
+        "cookie-parser": "^1.4.3",
+        "debug": "^2.6.9",
+        "dotenv": "^6.0.0",
+        "express": "^4.16.3",
+        "morgan": "^1.9.1"
+    },
+    "devDependencies": {
+        "babel-cli": "^6.26.0",
+        "babel-core": "^6.26.3",
+        "babel-eslint": "^9.0.0",
+        "babel-preset-env": "^1.7.0",
+        "babel-watch": "^2.0.7",
+        "eslint": "^3.3.1",
+        "rimraf": "^2.6.2"
+    }
+}

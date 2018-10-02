@@ -1,0 +1,93 @@
+list-component {
+    .content {
+        width           : 100%;
+        height          : 150px;
+        display         : flex;
+        justify-content : center;
+        flex-direction  : row;
+        cursor          : pointer;
+
+        .list-logo {
+            position        : relative;
+            flex            : 1 0 0;
+            align-items     : center;
+            justify-content : center;
+        }
+
+        .list-text {
+            position        : relative;
+            height          : 100%;
+            flex            : 2 0 0;
+            align-items     : center;
+            justify-content : center;
+        }
+
+        .text {
+            position      : absolute;
+            top           : 0;
+            bottom        : 0;
+            left          : 0;
+            right         : 0;
+            height        : 55%;
+            margin        : auto;
+            padding-right : 10px;
+
+            h2 {
+                margin-bottom  : 0px;
+                color          : $eucalyptus;
+                font-size      : 21px;
+                letter-spacing : 0.3px;
+            }
+
+            p {
+                margin      : 0;
+                color       : $mojo;
+                font-size   : 16px;
+                font-weight : 700;
+            }
+        }
+
+        .top-line {
+            top: 50% !important;
+        }
+
+        .bottom-line {
+            bottom: 50% !important;
+        }
+
+        .line {
+            position         : absolute;
+            top              : 0;
+            bottom           : 0;
+            left             : 0;
+            right            : 0;
+            width            : 5%;
+            margin           : auto;
+            background-color : $eucalyptus;
+        }
+
+        .circle {
+            position         : absolute;
+            top              : 0;
+            bottom           : 0;
+            left             : 0;
+            right            : 0;
+            width            : 65px;
+            height           : 65px;
+            margin           : auto;
+            border-radius    : 50%;
+            background-color : $eucalyptus;
+        }
+
+        .icon {
+            position : absolute;
+            top      : 0;
+            bottom   : 0;
+            left     : 0;
+            right    : 0;
+            margin   : auto;
+            width    : 35%;
+            height   : 35%;
+        }
+    }
+}

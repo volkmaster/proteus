@@ -1,0 +1,15 @@
+<div class="top">
+    <img src="../../assets/imgs/icon_close.png" class="close-icon" (click)="close()">
+    <h1 class="title">{{ object?.title }}</h1>
+</div>
+<div class="content">
+    <img *ngIf="object?.image" [src]="object.image"/>
+</div>
+<div class="bottom">
+    <div *ngIf="object?.sound" (click)="playAudio()">
+        <img src="../../assets/imgs/icon_play.png" class="play-icon"/>
+    </div>
+    <div class="description">
+        <p>{{ object?.description }}</p>
+    </div>
+</div>

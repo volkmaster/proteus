@@ -1,0 +1,14 @@
+<div *ngIf="object" class="content" (click)="displayDetails()">
+    <div class="list-logo">
+        <div class="line" [ngClass]="[isFirst ? 'top-line' : '', isLast ? 'bottom-line' : '']"></div>
+        <div class="circle"></div>
+        <img class="icon" [src]="object.icon"/>
+    </div>
+    <div class="list-text">
+        <div class="text">
+            <h2>{{ object.title }}</h2>
+            <p *ngIf="object.startTime && object.endTime">{{ object.startTime }} - {{ object.endTime }}</p>
+            <p *ngIf="!object.endTime">{{ object.startTime }}</p>
+        </div>
+    </div>
+</div>

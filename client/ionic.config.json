@@ -1,0 +1,7 @@
+{
+    "name": "Proteus",
+    "integrations": {
+        "cordova": {}
+    },
+    "type": "ionic-angular"
+}
