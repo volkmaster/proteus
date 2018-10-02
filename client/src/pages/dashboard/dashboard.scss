@@ -1,6 +1,7 @@
 page-dashboard {
     .content {
         width            : 100%;
+        height           : 100%;
         background-color : $pink;
         overflow-y       : scroll;
 
@@ -13,6 +14,7 @@ page-dashboard {
 
         .header {
             padding         : 10px;
+            height          : 15%;
             display         : flex;
             justify-content : center;
             text-align      : center;
@@ -20,6 +22,11 @@ page-dashboard {
             .logo {
                 height: 70px;
             }
+        }
+
+        .plan-list {
+            height      : 80%;
+            overflow-y  : scroll;
         }
 
         .loader {

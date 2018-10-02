@@ -3,7 +3,7 @@
         <img class="logo" (click)="goToHome()" src="../../assets/imgs/logo_orange.svg"/>
     </div>
     <img *ngIf="loading" class="loader" src="../../assets/imgs/spinner.svg"/>
-    <div *ngIf="!loading">
+    <div *ngIf="!loading" class="plan-list">
         <list-component [object]="item" [isFirst]="i === 0" [isLast]="i === scenarios[0].length - 1" *ngFor="let item of scenarios[0]; let i = index"></list-component>
         <div class="button button-maps" (click)="goToMaps()">Go</div>
         <div class="button button-qr-code" (click)="goToQrCode()">QR code</div>
