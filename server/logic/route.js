@@ -47,10 +47,10 @@ const TRAVEL_METHODS = {
 
 // What is the maximum km that we will consider for each mode of transportation
 const TRAVEL_METHOD_DISTANCE_LIMIT = {
-    'TRAVEL_METHOD_CAR': 50,
-    'TRAVEL_METHOD_PUBLIC_TRANSPORT': 50,
-    'TRAVEL_METHOD_BICYCLE': 10,
-    'TRAVEL_METHOD_FOOT': 5
+    'TRAVEL_METHOD_CAR': 15,
+    'TRAVEL_METHOD_PUBLIC_TRANSPORT': 15,
+    'TRAVEL_METHOD_BICYCLE': 5,
+    'TRAVEL_METHOD_FOOT': 1
 }
 
 
