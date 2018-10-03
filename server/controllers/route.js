@@ -2,21 +2,6 @@ import express from 'express'
 const router = express.Router()
 
 import routeLogic from '../logic/route'
-// import { sendError } from '../utils/error-utils'
-
-// router.get('/:id', async (req, res, next) => {
-//     const userId = req.params.id
-//     if (!userId) {
-//         res.status(400).send('User ID is required.')
-//     }
-
-//     try {
-//         const user = await userLogic.get(userId)
-//         res.json(user)
-//     } catch (error) {
-//         sendError(res, error)
-//     }
-// })
 
 router.get('', (req, res, next) => {
     const params = {
