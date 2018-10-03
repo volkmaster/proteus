@@ -161,7 +161,7 @@ function generateRoute(params) {
     // Keep track of what time of the day it currently is
     let startTime = DAY_DURATION[params.travelDuration][0]
     let endTime = DAY_DURATION[params.travelDuration][1]
-    let currentTime = startTime
+    let currentTime = startTime.clone()
 
     // We'll keep track of preference probabilities so that the same type
     // doesn't repeat too many times
@@ -169,7 +169,8 @@ function generateRoute(params) {
     preferenceProbabilities = normalize(preferenceProbabilities)
     
     let distances, probabilities, idx, entry, previousCoords
-    for (let j = 0; j < 5; j++) {
+    // Leave 30 minutes of lee-way between so we can get home comfortably
+    while (currentTime.isBefore(endTime.clone().subtract(30, 'minutes'))) {
         // Compute distances from the current location to all the locations in the database
         distances = haversineDistance(currentCoords, locationCoords)
         
