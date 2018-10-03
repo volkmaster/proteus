@@ -2,8 +2,10 @@ import express from 'express'
 const router = express.Router()
 
 import routeLogic from '../logic/route'
+import * as translate from '../logic/translate'
 
-router.get('', (req, res, next) => {
+
+router.get('', async (req, res, next) => {
     const params = {
         // Default to coordinates in the middle of Ljubljana
         seedCoords: [parseFloat(req.query.lat) || 46.050185,
@@ -24,6 +26,13 @@ router.get('', (req, res, next) => {
 
     // Generate a route with the given parameters
     const route = routeLogic.generateRoute(params)
+
+    // Translate slovene descriptions to english so we can generate audio files using watson
+    const descriptions = route.map(node => node.entry.description)
+    const translatedDescriptions = await translate.sloveneToEnglish(descriptions)
+    translatedDescriptions.forEach((val, idx) => {
+        route[idx].entry['descriptionEn'] = val
+    })
 
     res.json(route)
 })
