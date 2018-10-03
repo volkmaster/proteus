@@ -106,6 +106,8 @@ const weightedRand = (arr, probabilities) => {
     return arr[arr.length - 1]
 }
 
+const ones = (n) => Array(n).fill().map((_) => 1)
+
 // Compute the great circle distance between a seed location and a list of
 // location coords. I suppose that since Slovenia is small and the curvature is
 // locally linear, using euclidean would be fine in most cases as well, but
@@ -138,19 +140,33 @@ function generateRoute(params) {
 
     let currentCoords = params.seedCoords
     let route = []
+
+    // We'll keep track of preference probabilities so that the same type
+    // doesn't repeat too many times
+    let preferenceProbabilities = ones(params.preferences.length)
+    preferenceProbabilities = normalize(preferenceProbabilities)
     
     let distances, probabilities, idx, entry
-    for (let i = 0; i < 5; i++) {
+    for (let j = 0; j < 10; j++) {
         // Compute distances from the current location to all the locations in the database
         distances = haversineDistance(currentCoords, locationCoords)
         
         probabilities = dnormArr(distances, 0, stddev)
+
         // Zero out any of the locations that were not in the users preferences
         for (let i = 0; i < data.length; i++) {
             if (!params.preferences.includes(BUILDING_TYPE_MAPPING[data[i].type]))
                 probabilities[i] = 0 
         }
         
+        // Use running preference probabilities so the same type of building is
+        // not repeated too many times
+        for (let i = 0; i < data.length; i++) {
+            let idx = params.preferences.findIndex((el) => el == BUILDING_TYPE_MAPPING[data[i].type])
+            if (idx >= 0) { // Is -1 if the type of building is not in preferences
+                probabilities[i] *= preferenceProbabilities[idx]
+            }
+        }
 
         // Zero out already visited locations so the same place is not recommended twice
         route.forEach(entry => { probabilities[entry.idx] = 0 })
@@ -161,6 +177,13 @@ function generateRoute(params) {
         entry = data[idx]
         route.push({ idx, entry, distance: distances[idx] })
         currentCoords = [entry.latitude, entry.longitude]
+
+        // Update preference probabilities
+        console.log(preferenceProbabilities);
+        let typeIdx = params.preferences.findIndex((el) => el == BUILDING_TYPE_MAPPING[entry.type])
+        preferenceProbabilities[typeIdx] = Math.max(0, preferenceProbabilities[typeIdx] - 0.2)
+        preferenceProbabilities = normalize(preferenceProbabilities)
+        
     }
 
     return route
