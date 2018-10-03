@@ -179,7 +179,6 @@ function generateRoute(params) {
         currentCoords = [entry.latitude, entry.longitude]
 
         // Update preference probabilities
-        console.log(preferenceProbabilities);
         let typeIdx = params.preferences.findIndex((el) => el == BUILDING_TYPE_MAPPING[entry.type])
         preferenceProbabilities[typeIdx] = Math.max(0, preferenceProbabilities[typeIdx] - 0.2)
         preferenceProbabilities = normalize(preferenceProbabilities)
