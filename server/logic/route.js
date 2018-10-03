@@ -28,6 +28,15 @@ function invertObject(obj) {
 }
 const INVERSE_BUILDING_TYPE_MAPPING = invertObject(BUILDING_TYPE_MAPPING)
 
+// How much time will we give to each visiting location type (in minutes)
+const BUILDING_TYPE_VISIT_DURATION = {
+    'museum': 90,
+    'regional': 45,
+    'historical': 45,
+    'archeological': 30,
+    'church': 30
+}
+
 function normalizeBuildingTypes(buildings, ignoreUnrecognized = true) {
     let types = []
     buildings.forEach((val) => {
@@ -65,7 +74,7 @@ const DAY_DURATION = (() => {
         moment().tz('Europe/Ljubljana').hour(t).minute(0).second(0))
 
     return {
-        'full': [times[0].clone(), times[2].clone()],
+        'day': [times[0].clone(), times[2].clone()],
         'morning': [times[0].clone(), times[1].clone()],
         'evening': [times[1].clone(), times[2].clone()]
     }
@@ -129,6 +138,14 @@ function haversineDistance(seedCoords, coords = locationCoords) {
     })
 }
 
+// Get the duration of time needed to reach the end from the start
+function getTravelTimeBetween(start, end, method) {
+    // TODO: Replace this with API call to google distance matrix to get actual travel time
+    const distance = haversineDistance(start, [end])[0];
+    const speed = {'car': 40, 'bicycle': 10, 'foot': 3, 'public': 30}[method]
+    return speed / distance
+}
+
 
 function generateRoute(params) {
     const travelMethod = TRAVEL_METHODS[params.travelMethod]
@@ -141,13 +158,18 @@ function generateRoute(params) {
     let currentCoords = params.seedCoords
     let route = []
 
+    // Keep track of what time of the day it currently is
+    let startTime = DAY_DURATION[params.travelDuration][0]
+    let endTime = DAY_DURATION[params.travelDuration][1]
+    let currentTime = startTime
+
     // We'll keep track of preference probabilities so that the same type
     // doesn't repeat too many times
     let preferenceProbabilities = ones(params.preferences.length)
     preferenceProbabilities = normalize(preferenceProbabilities)
     
-    let distances, probabilities, idx, entry
-    for (let j = 0; j < 10; j++) {
+    let distances, probabilities, idx, entry, previousCoords
+    for (let j = 0; j < 5; j++) {
         // Compute distances from the current location to all the locations in the database
         distances = haversineDistance(currentCoords, locationCoords)
         
@@ -172,10 +194,12 @@ function generateRoute(params) {
         route.forEach(entry => { probabilities[entry.idx] = 0 })
         probabilities = normalize(probabilities)
         
+        // Select a random location according to the probabilities
         idx = weightedRand(locationIndices, probabilities)
         
         entry = data[idx]
-        route.push({ idx, entry, distance: distances[idx] })
+        let routeNode = { idx, entry, distance: distances[idx] }
+        previousCoords = currentCoords
         currentCoords = [entry.latitude, entry.longitude]
 
         // Update preference probabilities
@@ -183,7 +207,22 @@ function generateRoute(params) {
         preferenceProbabilities[typeIdx] = Math.max(0, preferenceProbabilities[typeIdx] - 0.2)
         preferenceProbabilities = normalize(preferenceProbabilities)
         
+        // How long will it take to get from where we are now to where we want to go?
+        const driveTime = getTravelTimeBetween(previousCoords, currentCoords, params.travelMethod)
+        routeNode['travelStartTime'] = currentTime
+        routeNode['travelDuration'] = driveTime
+        currentTime = currentTime.add(driveTime, 'minutes')
+        // How long will we stay there?
+        const visitDuration = BUILDING_TYPE_VISIT_DURATION[BUILDING_TYPE_MAPPING[entry.type]]
+        routeNode['visitStartTime'] = currentTime
+        currentTime = currentTime.add(visitDuration, 'minutes')
+        routeNode['visitEndTime'] = currentTime
+        routeNode['visitDuration'] = visitDuration
+
+        route.push(routeNode)
     }
+    console.log(route);
+    
 
     return route
 }
