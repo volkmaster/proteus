@@ -21,6 +21,12 @@ const BUILDING_TYPE_MAPPING = {
     'profana stavbna dediščina': 'regional',
     'sakralna stavbna dediščina': 'church'
 }
+function invertObject(obj) {
+    let newObj = {}
+    for (let key in obj) newObj[obj[key]] = key
+    return newObj
+}
+const INVERSE_BUILDING_TYPE_MAPPING = invertObject(BUILDING_TYPE_MAPPING)
 
 function normalizeBuildingTypes(buildings, ignoreUnrecognized = true) {
     let types = []
@@ -139,6 +145,13 @@ function generateRoute(params) {
         distances = haversineDistance(currentCoords, locationCoords)
         
         probabilities = dnormArr(distances, 0, stddev)
+        // Zero out any of the locations that were not in the users preferences
+        for (let i = 0; i < data.length; i++) {
+            if (!params.preferences.includes(BUILDING_TYPE_MAPPING[data[i].type]))
+                probabilities[i] = 0 
+        }
+        
+
         // Zero out already visited locations so the same place is not recommended twice
         route.forEach(entry => { probabilities[entry.idx] = 0 })
         probabilities = normalize(probabilities)
