@@ -28,7 +28,8 @@
     "license": "MIT",
     "private": true,
     "scripts": {
-        "dev": "DEBUG=proteus:* npm run lint && babel-watch --exclude ./dist,./node_modules,./LICENSE.txt,./package-lock.json,./package.json app.js",
+        "devorg": "DEBUG=proteus:* npm run lint && babel-watch --exclude ./dist,./node_modules,./LICENSE.txt,./package-lock.json,./package.json app.js",
+        "dev": "DEBUG=proteus:* babel-watch --exclude ./dist,./node_modules,./LICENSE.txt,./package-lock.json,./package.json app.js",
         "debug": "DEBUG=proteus:* babel-watch --exclude ./dist,./node_modules,./LICENSE.txt,./package-lock.json,./package.json app.js --debug-brk --inspect app.js",
         "start": "npm run build && node ./dist/app.js",
         "build": "rimraf dist/ && babel ./ --out-dir dist/ --ignore ./node_modules,./LICENSE.txt,./package-lock.json,./package.json --copy-files",
