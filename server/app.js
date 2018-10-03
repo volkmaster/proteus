@@ -3,7 +3,6 @@ dotenv.config()
 
 import express from 'express'
 import http from 'http'
-import path from 'path'
 import cookieParser from 'cookie-parser'
 import logger from 'morgan'
 const debug = require('debug')('proteus:server')
@@ -11,6 +10,7 @@ const debug = require('debug')('proteus:server')
 import { normalizePort } from './utils/server-utils'
 
 import userController from './controllers/user'
+import routeController from './controllers/route'
 
 const app = express()
 
@@ -22,6 +22,7 @@ app.use(cookieParser())
 
 // controllers
 app.use('/api/users', userController)
+app.use('/api/route', routeController)
 
 // port
 const port = normalizePort(process.env.PORT || '3000')
