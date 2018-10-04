@@ -12,26 +12,6 @@ router.use(verifyToken)
 router.post('/', async (req, res, next) => {
     const data = req.body
 
-    if (!data.latitude) {
-        res.status(400).send('Latitude is required.')
-    }
-
-    if (!data.longitude) {
-        res.status(400).send('Longitude is required.')
-    }
-
-    if (!data.travelMethod) {
-        res.status(400).send('Travel method is required.')
-    }
-
-    if (!data.travelDuration) {
-        res.status(400).send('Travel duration is required.')
-    }
-
-    if (!data.preferences) {
-        res.status(400).send('Preferences required.')
-    }
-
     // Get user's past routes
     try {
         const user = await userLogic.get(req.decoded.id)
