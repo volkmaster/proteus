@@ -23,8 +23,8 @@ router.post('/', async (req, res, next) => {
     const params = {
         // Default to coordinates in the middle of Ljubljana
         seedCoords: [
-            parseFloat(data.latitude) || 46.050185,
-            parseFloat(data.longitude) || 14.503785
+            data.latitude || 46.050185,
+            data.longitude || 14.503785
         ],
 
         // How will our weary traveller move around the country and how long of
@@ -35,7 +35,7 @@ router.post('/', async (req, res, next) => {
         // Properly parse preferences string given in comma-separated format:
         // ...&preferences=church,museum,regional
         preferences: (value => {
-            return value.length > 0 ? routeLogic.normalizeBuildingTypes(value) : Object.keys(routeLogic.BUILDING_TYPES)
+            return value ? routeLogic.normalizeBuildingTypes(value) : Object.keys(routeLogic.BUILDING_TYPES)
         })(data.preferences)
     }
 
