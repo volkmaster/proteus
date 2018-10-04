@@ -1,18 +1,15 @@
 import express from 'express'
-const router = express.Router()
 
-import user from '../models/user'
 import userLogic from '../logic/user'
-import { verifyToken } from '../middleware/verifyToken'
-import { verifyAdmin } from '../middleware/verifyAdmin'
-import { verifyIdMatch } from '../middleware/verifyAdmin'
+import { verifyToken, verifyAdmin, verifyIdMatch } from '../middleware/middleware'
 import { sendError } from '../utils/error-utils'
 
-router.use(verifyToken);
+const router = express.Router()
+router.use(verifyToken)
 
 router.get('/', async (req, res, next) => {
     try {
-        const users = await (User.find({}, '-_id -admin -password -__v').sort({ username: -1 }))
+        const users = await userLogic.all()
         res.status(200).send(users)
     } catch (error) {
         sendError(res, error)
@@ -21,10 +18,10 @@ router.get('/', async (req, res, next) => {
 
 router.get('/me', async (req, res, next) => {
     try {
-        const user = await (User.findById(req.decoded.id, '-password -__v'))
+        const user = await userLogic.get(req.decoded.id)
         res.status(200).send(user)
     } catch (error) {
-        res.sendStatus(404)
+        sendError(res, error)
     }
 })
 
@@ -36,13 +33,13 @@ router.get('/:id', verifyIdMatch, async (req, res, next) => {
 
     try {
         const user = await userLogic.get(userId)
-        res.json(user)
+        res.status(200).json(user)
     } catch (error) {
         sendError(res, error)
     }
 })
 
-router.put('/:id', verifyIdMatch, async (req, res, next) => {
+router.patch('/:id', verifyIdMatch, async (req, res, next) => {
     const userId = req.params.id
     if (!userId) {
         res.status(400).send('User ID is required.')
@@ -55,7 +52,7 @@ router.put('/:id', verifyIdMatch, async (req, res, next) => {
     const data = req.body
 
     try {
-        await User.findOneAndUpdate({ _id: userId }, { $set: data }, {})
+        await userLogic.update(userId, data)
         res.sendStatus(204)
     } catch (error) {
         sendError(res, error)
@@ -69,7 +66,7 @@ router.delete('/:id', [verifyAdmin, verifyIdMatch], async (req, res, next) => {
     }
 
     try {
-        await (User.remove({ _id: userId }))
+        await userLogic.delete(userId)
         res.sendStatus(204)
     } catch (error) {
         sendError(res, error)

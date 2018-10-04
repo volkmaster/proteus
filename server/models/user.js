@@ -1,13 +1,16 @@
 import mongoose from 'mongoose'
 import bcrypt from 'bcrypt'
 
-const userSchema = new mongoose.Schema({
+const schema = new mongoose.Schema({
     username: String,
     password: String,
-    admin: Boolean
+    admin: Boolean,
+    routes: [
+        { type: mongoose.Schema.Types.ObjectId, ref: 'routes' }
+    ]
 })
 
-userSchema.pre('save', function(next) {
+schema.pre('save', function(next) {
     const user = this
 
     if (!user.isModified('password')) {
@@ -30,4 +33,4 @@ userSchema.pre('save', function(next) {
     })
 })
 
-module.exports = mongoose.model('users', userSchema)
+module.exports = mongoose.model('users', schema)

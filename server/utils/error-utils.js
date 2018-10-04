@@ -1,18 +1,6 @@
 module.exports = {
-    formatResponseError: (status, errors) => {
-        return {
-            status: status,
-            content: errors.map(error => {
-                const formattedError = { message: error.message }
-                if (error.problems) {
-                    formattedError['problems'] = error.problems.map(problem => problem.explanation)
-                }
-                return formattedError
-            })
-        }
-    },
-    formatUserError: (status, errors) => {
-        return { status, content: errors }
+    formatError: (status, error) => {
+        return { status, content: error }
     },
     sendError: (res, error) => {
         if (error.message) {

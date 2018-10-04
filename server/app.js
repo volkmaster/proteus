@@ -2,15 +2,19 @@ import dotenv from 'dotenv'
 dotenv.config()
 
 import express from 'express'
+import mongoose from 'mongoose'
+import 'babel-polyfill'
 import http from 'http'
-import path from 'path'
 import cookieParser from 'cookie-parser'
+import path from 'path'
 import logger from 'morgan'
 const debug = require('debug')('proteus:server')
 
-import { normalizePort } from './utils/server-utils'
-
+import authController from './controllers/auth'
 import userController from './controllers/user'
+import routeController from './controllers/route'
+
+import { normalizePort } from './utils/server-utils'
 
 const app = express()
 
@@ -19,42 +23,53 @@ app.use(logger('dev'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
+app.use(express.static(path.join(__dirname, 'public')))
 
 // controllers
+app.use('/api/auth', authController)
 app.use('/api/users', userController)
+app.use('/api/routes', routeController)
 
-// port
-const port = normalizePort(process.env.PORT || '3000')
-app.set('port', port)
-
-// server
-const server = http.createServer(app)
-server.listen(port)
-server.on('error', (error) => {
-    if (error.syscall !== 'listen') {
+// database
+mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true }, (error) => {
+    if (error) {
         throw error
     }
 
-    const bind = typeof port === 'string' ? 'Pipe ' + port : 'Port ' + port
+    console.log('Connected to mongo database...')
 
-    // handle specific listen errors with friendly messages
-    switch (error.code) {
-        case 'EACCES':
-            console.error(bind + ' requires elevated privileges')
-            process.exit(1)
-            break
-        case 'EADDRINUSE':
-            console.error(bind + ' is already in use')
-            process.exit(1)
-            break
-        default:
+    // server
+    const server = http.createServer(app)
+    const port = normalizePort(process.env.PORT || '3000')
+    server.listen(port)
+
+    server.on('error', (error) => {
+        if (error.syscall !== 'listen') {
             throw error
-    }
-})
-server.on('listening', () => {
-    const address = server.address()
-    const bind = typeof address === 'string' ? 'pipe ' + address : 'port ' + address.port
-    debug('Listening on ' + bind)
+        }
+
+        const bind = typeof port === 'string' ? 'Pipe ' + port : 'Port ' + port
+
+        // handle specific listen errors with friendly messages
+        switch (error.code) {
+            case 'EACCES':
+                console.error(bind + ' requires elevated privileges')
+                process.exit(1)
+                break
+            case 'EADDRINUSE':
+                console.error(bind + ' is already in use')
+                process.exit(1)
+                break
+            default:
+                throw error
+        }
+    })
+
+    server.on('listening', () => {
+        const address = server.address()
+        const bind = typeof address === 'string' ? 'pipe ' + address : 'port ' + address.port
+        debug('Listening on ' + bind)
+    })
 })
 
 module.exports = app
