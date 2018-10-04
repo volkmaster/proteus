@@ -2,6 +2,8 @@ import moment from 'moment'
 import 'moment-timezone'
 
 import Route from '../models/route'
+import locationLogic from '../logic/location'
+import { sloveneToEnglish } from '../logic/translate'
 import { formatError } from '../utils/error-utils'
 
 async function all(data) {
@@ -61,7 +63,7 @@ const BUILDING_TYPES = {
     'historical': 'BUILDING_TYPE_HISTORICAL',
 }
 
-// Map the entry type to something we can recognize and work with easily
+// Map the location type to something we can recognize and work with easily
 const BUILDING_TYPE_MAPPING = {
     'museum': 'museum',
     'vrtnoarhitekturna dediščina': 'regional',
@@ -132,15 +134,11 @@ const DAY_DURATION = (() => {
     }
 })()
 
-// Load up data once, so it'll be avabilable for all requests
-const data = require('../data/full.json')
-
 // Extract lat/long from the database since we'll be using this frequently to
 // compute distances
 function extractCoordinates(locations) {
-    return locations.map((entry) => [entry['latitude'], entry['longitude']])
+    return locations.map(location => [location['latitude'], location['longitude']])
 }
-const locationCoords = extractCoordinates(data)
 
 const toRadians = (angle) => angle * Math.PI / 180
 const range = (n) => Array(n + 1).fill().map((_, idx) => idx)
@@ -176,12 +174,12 @@ const ones = (n) => Array(n).fill().map(() => 1)
 // location coords. I suppose that since Slovenia is small and the curvature is
 // locally linear, using euclidean would be fine in most cases as well, but
 // let's be precise
-function haversineDistance(seedCoords, coords = locationCoords) {
-    return coords.map(entry => {
+function haversineDistance(seedCoords, coords) {
+    return coords.map(location => {
         const lat1 = toRadians(seedCoords[0])
         const long1 = toRadians(seedCoords[1])
-        const lat2 = toRadians(entry[0])
-        const long2 = toRadians(entry[1])
+        const lat2 = toRadians(location[0])
+        const long2 = toRadians(location[1])
 
         const dlong = long2 - long1
         const dlat = lat2 - lat1
@@ -204,7 +202,10 @@ function getTravelTimeBetween(start, end, method) {
     return speed / distance
 }
 
-function generateRoute(params) {
+async function generateRoute(params) {
+    // Load up data
+    const data = await locationLogic.all()
+
     const travelMethod = TRAVEL_METHODS[params.travelMethod]
 
     // 95% of all data falls within 2 standard deviations in a normal distribution
@@ -225,7 +226,9 @@ function generateRoute(params) {
     let preferenceProbabilities = ones(params.preferences.length)
     preferenceProbabilities = normalize(preferenceProbabilities)
 
-    let distances, probabilities, idx, entry, previousCoords
+    let distances, probabilities, idx, location, previousCoords
+    const locationCoords = extractCoordinates(data)
+
     // Leave 30 minutes of lee-way between so we can get home comfortably
     while (currentTime.isBefore(endTime.clone().subtract(30, 'minutes'))) {
         // Compute distances from the current location to all the locations in the database
@@ -243,28 +246,36 @@ function generateRoute(params) {
         // Use running preference probabilities so the same type of building is
         // not repeated too many times
         for (let i = 0; i < data.length; i++) {
-            let idx = params.preferences.findIndex((el) => el === BUILDING_TYPE_MAPPING[data[i].type])
+            let idx = params.preferences.findIndex(el => el === BUILDING_TYPE_MAPPING[data[i].type])
             if (idx >= 0) { // Is -1 if the type of building is not in preferences
                 probabilities[i] *= preferenceProbabilities[idx]
             }
         }
 
         // Zero out already visited locations so the same place is not recommended twice
-        route.forEach(entry => {
-            probabilities[entry.idx] = 0
+        route.forEach(node => {
+            probabilities[node.idx] = 0
         })
         probabilities = normalize(probabilities)
 
         // Select a random location according to the probabilities
         idx = weightedRand(locationIndices, probabilities)
 
-        entry = data[idx]
-        let routeNode = { idx, entry, distance: distances[idx] }
+        location = data[idx]
+
+        // Translate slovene descriptions to english so we can generate audio files using Watson
+        if (location.description && !location.descriptionEn) {
+            const descriptionEn = await sloveneToEnglish(location.description)
+            await locationLogic.update(location.id, { descriptionEn })
+            location['descriptionEn'] = descriptionEn
+        }
+
+        const routeNode = { idx, location, distance: distances[idx] }
         previousCoords = currentCoords
-        currentCoords = [entry.latitude, entry.longitude]
+        currentCoords = [location.latitude, location.longitude]
 
         // Update preference probabilities
-        let typeIdx = params.preferences.findIndex((el) => el === BUILDING_TYPE_MAPPING[entry.type])
+        const typeIdx = params.preferences.findIndex(el => el === BUILDING_TYPE_MAPPING[location.type])
         preferenceProbabilities[typeIdx] = Math.max(0, preferenceProbabilities[typeIdx] - 0.2)
         preferenceProbabilities = normalize(preferenceProbabilities)
 
@@ -275,7 +286,7 @@ function generateRoute(params) {
         currentTime = currentTime.add(driveTime, 'minutes')
 
         // How long will we stay there?
-        const visitDuration = BUILDING_TYPE_VISIT_DURATION[BUILDING_TYPE_MAPPING[entry.type]]
+        const visitDuration = BUILDING_TYPE_VISIT_DURATION[BUILDING_TYPE_MAPPING[location.type]]
         routeNode['visitStartTime'] = currentTime
         currentTime = currentTime.add(visitDuration, 'minutes')
         routeNode['visitEndTime'] = currentTime

@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 
 const schema = new mongoose.Schema({
-    route: Object
+    nodes: Object
 })
 
 module.exports = mongoose.model('routes', schema)

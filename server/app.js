@@ -12,6 +12,7 @@ const debug = require('debug')('proteus:server')
 
 import authController from './controllers/auth'
 import userController from './controllers/user'
+import locationController from './controllers/location'
 import routeController from './controllers/route'
 
 import { normalizePort } from './utils/server-utils'
@@ -28,6 +29,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 // controllers
 app.use('/api/auth', authController)
 app.use('/api/users', userController)
+app.use('/api/locations', locationController)
 app.use('/api/routes', routeController)
 
 // database

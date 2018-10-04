@@ -45,10 +45,6 @@ router.patch('/:id', verifyIdMatch, async (req, res, next) => {
         res.status(400).send('User ID is required.')
     }
 
-    if (userId !== req.decoded.id && !req.decoded.admin) {
-        res.sendStatus(401)
-    }
-
     const data = req.body
 
     try {

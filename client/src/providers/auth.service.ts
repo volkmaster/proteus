@@ -12,7 +12,11 @@ export class AuthService {
     constructor(private requestService: RequestService) { }
 
     public login(username: string, password: string): Observable<any> {
-        return this.requestService.post('/login', { username, password });
+        return this.requestService.post('/auth/login', { username, password });
+    }
+
+    public isLoggedIn(): Observable<boolean> {
+        return this.requestService.get('/auth/verify');
     }
 
     public logout() {
