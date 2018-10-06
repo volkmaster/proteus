@@ -19,13 +19,15 @@ import { GeoService } from '../providers/geo.service';
 import { ToastService } from '../providers/toast.service';
 
 // Pages
-import { MyApp } from './app.component';
-import { HomePage } from '../pages/home/home';
-import { FiltersPage } from '../pages/filters/filters';
-import { DashboardPage } from '../pages/dashboard/dashboard';
-import { DetailsPage } from '../pages/details/details';
-import { MapsPage } from '../pages/maps/maps';
-import { QrCodePage } from '../pages/qr-code/qr-code';
+import { MyApp }            from './app.component';
+import { HomePage }         from '../pages/home/home';
+import { FiltersPage }      from '../pages/filters/filters';
+import { DashboardPage }    from '../pages/dashboard/dashboard';
+import { DetailsPage }      from '../pages/details/details';
+import { MapsPage }         from '../pages/maps/maps';
+import { QrCodePage }       from '../pages/qr-code/qr-code';
+import { LoginPage }        from '../pages/login/login';
+import { RegisterPage }     from '../pages/register/register';
 
 // Components
 import { ListComponent } from '../components/list-component';
@@ -39,7 +41,9 @@ import { ListComponent } from '../components/list-component';
         ListComponent,
         DetailsPage,
         MapsPage,
-        QrCodePage
+        QrCodePage,
+        LoginPage,
+        RegisterPage
     ],
     imports: [
         BrowserModule,
