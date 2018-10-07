@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
@@ -16,6 +17,7 @@ import { HttpService } from '../providers/http.service';
 import { RequestService } from '../providers/request.service';
 import { FilterService } from '../providers/filter.service';
 import { GeoService } from '../providers/geo.service';
+import { LocalStorageService } from '../providers/local-storage.service';
 import { ToastService } from '../providers/toast.service';
 
 // Pages
@@ -47,6 +49,7 @@ import { ListComponent } from '../components/list-component';
     ],
     imports: [
         BrowserModule,
+        HttpClientModule,
         IonicModule.forRoot(MyApp)
     ],
     bootstrap: [IonicApp],
@@ -58,7 +61,9 @@ import { ListComponent } from '../components/list-component';
         ListComponent,
         DetailsPage,
         MapsPage,
-        QrCodePage
+        QrCodePage,
+        LoginPage,
+        RegisterPage
     ],
     providers: [
         { provide: ErrorHandler, useClass: IonicErrorHandler },
@@ -75,6 +80,7 @@ import { ListComponent } from '../components/list-component';
         RequestService,
         FilterService,
         GeoService,
+        LocalStorageService,
         ToastService
     ]
 })

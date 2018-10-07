@@ -6,14 +6,14 @@ import { NativeAudio } from '@ionic-native/native-audio';
 
 // Pages
 import { HomePage } from '../pages/home/home';
-import { DashboardPage } from '../pages/dashboard/dashboard';
+import { LoginPage } from '../pages/login/login';
 
 @Component({
     templateUrl: 'app.html'
 })
 export class MyApp {
 
-    public rootPage: any = DashboardPage;
+    public rootPage: any = LoginPage;
 
     constructor(
         private platform: Platform,
