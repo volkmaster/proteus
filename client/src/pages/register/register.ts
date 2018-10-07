@@ -9,6 +9,9 @@ import { AuthService } from '../../providers/auth.service';
 import { FiltersPage } from '../filters/filters';
 import { LoginPage } from '../login/login';
 
+// Custom validators
+import { PasswordValidation } from '../../providers/password.validator';
+
 @Component({
     selector: 'page-register',
     templateUrl: 'register.html'
@@ -19,6 +22,8 @@ export class RegisterPage {
         username     : ['', [Validators.required, Validators.minLength(3)]],
         password     : ['', [Validators.required, Validators.minLength(6)]],
         passwordConf : ['', [Validators.required, Validators.minLength(6)]]
+    }, {
+        validator : PasswordValidation.matchPassword
     });
     public validationMessages = {
         username: {
@@ -28,6 +33,13 @@ export class RegisterPage {
         password: {
             required: 'Password is required.',
             minlength: 'Password must be at least 6 characters long.'
+        },
+        passwordConf: {
+            required: 'Password confirmation is required.',
+            minlength: 'Password confirmation must be at least 6 characters long.'
+        },
+        passwordValidator: {
+            mismatch: 'Passwords must match.'
         }
     };
     public error = '';
@@ -43,9 +55,20 @@ export class RegisterPage {
     }
 
     public register() {
+
+        if(this.registerForm.get('passwordConf').getError('MatchPassword')) {
+            this.error = this.validationMessages.passwordValidator.mismatch;
+            return;
+        }
+
+        if(!this.registerForm.valid) {
+            return;
+        }
+
+        // Validation has passed
         this.authService.register(this.registerForm.value.username, this.registerForm.value.password).subscribe(
             data => {
-                this.navCtrl.push(LoginPage);
+                this.navCtrl.push(LoginPage, {message: 'Your registration was successful. Please log in using your username and password.'});
             },
             error => {
                 console.log(error);

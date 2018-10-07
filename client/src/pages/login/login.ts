@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 // Services
@@ -32,7 +32,8 @@ export class LoginPage {
     constructor(
         private navCtrl: NavController,
         private formBuilder: FormBuilder,
-        private authService: AuthService
+        private authService: AuthService,
+        private navParams: NavParams
     ) { }
 
     ionViewDidEnter() {
@@ -42,6 +43,11 @@ export class LoginPage {
             }
         });
         this.loginForm.valueChanges.subscribe(() => this.onValueChanged());
+    }
+
+    ionViewDidLoad() {
+        var msg = this.navParams.get('message');
+        this.error = msg != null ? msg : '';
     }
 
     public login() {
