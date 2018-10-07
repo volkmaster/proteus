@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner';
+import { Subscription } from 'rxjs/Subscription';
 
 // Pages
 import { DetailsPage } from '../details/details';
@@ -11,12 +12,12 @@ import { DetailsPage } from '../details/details';
 })
 export class QrCodePage {
 
-    public scanSub: any;
-    public location = {
+    private qrScannerSubscription: Subscription;
+    private location = {
         title: 'Palača Kazina',
         description: 'Večnamenska javna palača, zgrajena 1835-1837 pod vodstvom V. Vadnava, je strogo klasicistična arhitektura, ki odraža racionalizem 1. polovice 19. stol. Krasitvena dela v dvorani iz 19. stol. dopolnjujejo interierji v slogu funkcionalizma.',
-        time1: '10:45',
-        time2: '11:45',
+        startTime: '10:45',
+        endTime: '11:45',
         sound: 'uniqueId1',
         icon: 'castle',
         image: 'kazina.jpg'
@@ -37,7 +38,7 @@ export class QrCodePage {
                 // camera permission was granted
                 if (status.authorized) {
                     // start scanning
-                    this.scanSub = this.qrScanner.scan().subscribe((text: string) => {
+                    this.qrScannerSubscription = this.qrScanner.scan().subscribe((text: string) => {
                         console.log('Scanned something', text);
 
                         this.navCtrl.push(DetailsPage, { location: this.location });
@@ -46,7 +47,7 @@ export class QrCodePage {
                         this.qrScanner.hide();
 
                         // stop scanning
-                        this.scanSub.unsubscribe();
+                        this.qrScannerSubscription.unsubscribe();
                     });
 
                     this.qrScanner.resumePreview();

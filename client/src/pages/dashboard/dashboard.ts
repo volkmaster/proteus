@@ -72,7 +72,6 @@ export class DashboardPage {
                 destination += '+to:';
             }
         }
-        console.log(destination);
 
         this.launchNavigator.isAppAvailable(this.launchNavigator.APP.GOOGLE_MAPS).then((isAvailable: boolean) => {
             if (isAvailable) {

@@ -39,7 +39,7 @@ export class DetailsPage {
     }
 
     public close() {
-        this.navCtrl.setRoot(DashboardPage)
+        this.navCtrl.pop();
     }
 
     ionViewWillLeave() {
