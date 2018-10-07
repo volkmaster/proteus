@@ -40,6 +40,8 @@ router.post('/', async (req, res, next) => {
         // Generate a route with the given parameters
         const nodes = await routeLogic.generateRoute(params)
 
+        debugger;
+
         // Save the route
         route = await routeLogic.create({ nodes })
         user.routes.push(route)
@@ -50,5 +52,9 @@ router.post('/', async (req, res, next) => {
 
     res.status(201).json(route)
 })
+
+router.get('/filters', (req, res, next) => {
+    res.status(200).json(Object.keys(routeLogic.BUILDING_TYPES))
+});
 
 export default router

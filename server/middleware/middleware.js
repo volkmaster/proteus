@@ -8,7 +8,7 @@ module.exports = {
             token = token.replace('Bearer ', '')
             jwt.verify(token, process.env.JWT_SECRET, (error, decoded) => {
                 if (error) {
-                    return res.status(404).send('Failed to authenticate token.')
+                    return res.status(401).send('Failed to authenticate token.')
                 } else {
                     req.decoded = decoded
                     next()

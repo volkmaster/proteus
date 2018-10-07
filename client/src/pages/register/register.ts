@@ -6,8 +6,11 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from '../../providers/auth.service';
 
 // Pages
-import { FiltersPage } from '../filters/filters';
+import { HomePage } from '../home/home';
 import { LoginPage } from '../login/login';
+
+// Validators
+import { PasswordValidator } from '../../shared/password.validator';
 
 @Component({
     selector: 'page-register',
@@ -16,10 +19,10 @@ import { LoginPage } from '../login/login';
 export class RegisterPage {
 
     public registerForm = this.formBuilder.group({
-        username     : ['', [Validators.required, Validators.minLength(3)]],
-        password     : ['', [Validators.required, Validators.minLength(6)]],
-        passwordConf : ['', [Validators.required, Validators.minLength(6)]]
-    });
+        username: ['', [Validators.required, Validators.minLength(3)]],
+        password: ['', [Validators.required, Validators.minLength(6)]],
+        passwordConfirmation: ['', [Validators.required, Validators.minLength(6)]]
+    }, { validator: PasswordValidator.matchPassword });
     public validationMessages = {
         username: {
             required: 'Username is required.',
@@ -28,6 +31,11 @@ export class RegisterPage {
         password: {
             required: 'Password is required.',
             minlength: 'Password must be at least 6 characters long.'
+        },
+        passwordConfirmation: {
+            required: 'Password is required.',
+            minlength: 'Password must be at least 6 characters long.',
+            matchPassword: 'Password and its confirmation do not match.'
         }
     };
     public error = '';
@@ -39,20 +47,28 @@ export class RegisterPage {
     ) { }
 
     ionViewDidEnter() {
+        this.authService.isLoggedIn().subscribe((loggedIn: boolean) => {
+            if (loggedIn) {
+                this.navCtrl.push(HomePage);
+            }
+        });
         this.registerForm.valueChanges.subscribe(() => this.onValueChanged());
     }
 
     public register() {
         this.authService.register(this.registerForm.value.username, this.registerForm.value.password).subscribe(
-            data => {
+            (data: any) => {
                 this.navCtrl.push(LoginPage);
             },
-            error => {
-                console.log(error);
-            });
+            (error: any) => {
+                if (error.status === 400) {
+                    this.error = error.error;
+                }
+            }
+        );
     }
 
-    public toLogin() {
+    public goToLogin() {
         this.navCtrl.setRoot(LoginPage);
     }
 

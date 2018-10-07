@@ -1,12 +1,14 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { Platform } from 'ionic-angular';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/forkJoin';
 
 // Services
-import { FilterService } from '../../providers/filter.service';
+import { AuthService } from '../../providers/auth.service';
+import { RouteService } from '../../providers/route.service';
 
 // Pages
-import { HomePage } from '../home/home';
+import { LoginPage } from '../login/login';
 import { MapsPage } from '../maps/maps';
 import { QrCodePage } from '../qr-code/qr-code';
 
@@ -17,20 +19,36 @@ import { QrCodePage } from '../qr-code/qr-code';
 export class DashboardPage {
 
     public loading = true;
+    public username = '';
+    public route = null;
 
     constructor(
         private navCtrl: NavController,
-        private filterService: FilterService
+        private authService: AuthService,
+        private routeService: RouteService
     ) { }
 
     ionViewDidLoad() {
-        setTimeout(() => {
-            this.loading = false;
-        }, 100);
-    }
+        this.loading = true;
 
-    public goToHome() {
-        this.navCtrl.push(HomePage);
+        Observable.forkJoin([
+            this.authService.getUser(),
+            this.routeService.getRoute()
+        ]).subscribe(
+            (responses: any[]) => {
+                const [user, route] = responses;
+                this.username = user.username.toUpperCase();
+                this.route = route;
+                this.loading = false;
+            },
+            (errors: any[]) => {
+                const statuses = errors.map(error => error.status);
+                if (statuses.indexOf(401) >= 0) {
+                    this.authService.logout();
+                    this.navCtrl.setRoot(LoginPage);
+                }
+            }
+        );
     }
 
     public goToMaps() {
@@ -41,7 +59,7 @@ export class DashboardPage {
         this.navCtrl.push(QrCodePage);
     }
 
-    public scenarios = [
+    public routes = [
         [
             {
                 title: 'Hotel Slon',

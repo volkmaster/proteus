@@ -4,20 +4,9 @@ page-login, page-register {
         height           : 100%;
         background-color : $pomegranate;
 
-        .header {
-            padding         : 10px;
-            height          : 15%;
-            display         : flex;
-            justify-content : center;
-            text-align      : center;
-
-            .logo {
-                height : 70px;
-            }
-        }
-
         .content-body {
-            padding-top : 10%;
+            padding-top: 10%;
+
             form {
                 height          : 60%;
                 justify-content : center;
@@ -30,9 +19,9 @@ page-login, page-register {
 
                     input,
                     input::-webkit-input-placeholder {
-                        padding-top : 10px;
+                        padding-top : 14px;
                         font-family : $font-regular;
-                        font-size   : 20px;
+                        font-size   : 18px;
                         line-height : 1;
                         color       : $mandys-pink;
                     }
@@ -42,48 +31,51 @@ page-login, page-register {
                         background-color : transparent;
                         border           : none;
                         border-bottom    : 1px solid $mandys-pink;
-                        padding-left     : calc(10% + 20px);
-                        padding-bottom   : 10px;
+                        padding-left     : 40px;
+                        padding-bottom   : 3px;
                     }
+
                     .username-control {
-                        background      : url('../../assets/imgs/login_username_icon.svg') no-repeat scroll 20px 5px;
+                        background      : url('../../assets/imgs/icon_user.svg') no-repeat scroll 0px 6px;
                         background-size : 8%;
                     }
+
                     .password-control {
-                        background      : url('../../assets/imgs/login_password_icon.svg') no-repeat scroll 20px 0px;
+                        background      : url('../../assets/imgs/icon_password.svg') no-repeat scroll 0px 0px;
                         background-size : 8%;
                     }
                 }
 
                 .form-button {
                     width            : 100%;
-                    min-height       : 100px;
-                    opacity          : 1;
-                    color            : $pomegranate;
-                    font-family      : $font-bold;
-                    font-size        : 40px;
+                    min-height       : 85px;
                     background-color : $mandys-pink;
+                    color            : $pomegranate;
+                    font-size        : 38px;
+                    font-family      : $font-bold;
+                    opacity          : 1;
                 }
 
                 .error {
-                    padding-bottom  : 10%;
-                    color           : white;
+                    height         : 30px;
+                    padding-bottom : 10%;
+                    color          : $mandys-pink;
                 }
             }
         }
         .content-footer {
             padding-top  : 10%;
-            color        : white;
-            font-size    : 15px;
             padding-left : 10%;
+            color        : $mandys-pink;
+            font-size    : 15px;
             font-family  : $font-regular;
 
             p {
-                margin : 5px;
+                margin: 5px;
             }
 
-            .reg-btn {
-                text-decoration : underline;
+            .link-button {
+                text-decoration: underline;
             }
         }
     }

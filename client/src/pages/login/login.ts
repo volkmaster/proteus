@@ -6,7 +6,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../providers/auth.service';
 
 // Pages
-import { FiltersPage } from '../filters/filters';
+import { HomePage } from '../home/home';
 import { RegisterPage } from '../register/register';
 
 @Component({
@@ -38,7 +38,7 @@ export class LoginPage {
     ionViewDidEnter() {
         this.authService.isLoggedIn().subscribe((loggedIn: boolean) => {
             if (loggedIn) {
-                this.navCtrl.push(FiltersPage);
+                this.navCtrl.push(HomePage);
             }
         });
         this.loginForm.valueChanges.subscribe(() => this.onValueChanged());
@@ -46,19 +46,22 @@ export class LoginPage {
 
     public login() {
         this.authService.login(this.loginForm.value.username, this.loginForm.value.password).subscribe(
-            data => {
-                this.navCtrl.push(FiltersPage);
+            (data: any) => {
+                this.navCtrl.push(LoginPage);
             },
-            error => {
-                console.log(error);
-            });
+            (error: any) => {
+                if (error.status === 400) {
+                    this.error = error.error;
+                }
+            }
+        );
     }
 
     public logout() {
         this.authService.logout();
     }
 
-    public toRegister() {
+    public goToRegister() {
         this.navCtrl.setRoot(RegisterPage);
     }
 

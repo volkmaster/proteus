@@ -1,5 +1,10 @@
+<header-component
+    [background]="'#154693'"
+    [logo]="{ visible: false }"
+    [left]="{ text: username, color: '#FFCCCC' }"
+    [right]="{ text: 'ODJAVA', action: 'logout', color: '#FFCCCC' }">
+</header-component>
 <div class="content">
-    <img class="logo" src="../../assets/imgs/logo.svg"/>
-    <div class="text">YOUR GUIDE THROUGH HIDDEN CORNERS OF SLOVENIA</div>
+    <img class="logo" src="../../assets/imgs/logo_light_with_text.svg"/>
     <div class="button-go" (click)="goToFilters()">Let's go!</div>
 </div>

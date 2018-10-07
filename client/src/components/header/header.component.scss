@@ -1,0 +1,33 @@
+header-component {
+    .header {
+        position : relative;
+        height   : 75px;
+
+        .logo {
+            position : absolute;
+            top      : 0;
+            bottom   : 0;
+            left     : 0;
+            right    : 0;
+            height   : 95%;
+            margin   : 0 auto;
+        }
+
+        .text {
+            position    : absolute;
+            height      : 100%;
+            display     : flex;
+            align-items : center;
+            font-size   : 18px;
+            font-family : $font-bold;
+        }
+
+        .text--left {
+            left: 20px;
+        }
+
+        .text-right {
+            right: 20px;
+        }
+    }
+}

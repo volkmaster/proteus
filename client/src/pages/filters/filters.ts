@@ -1,12 +1,15 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { Platform } from 'ionic-angular';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/forkJoin';
 
 // Services
-import { FilterService } from '../../providers/filter.service';
+import { AuthService } from '../../providers/auth.service';
+import { RouteService } from '../../providers/route.service';
 
 // Pages
-import { HomePage } from '../home/home';
+import { LoginPage } from '../login/login';
 import { DashboardPage } from '../dashboard/dashboard';
 
 @Component({
@@ -15,41 +18,86 @@ import { DashboardPage } from '../dashboard/dashboard';
 })
 export class FiltersPage {
 
-	public questionCounter = 0;
-	public questionsNumber = 10;
+    public loading = true;
+    public username = '';
+    public filters = [];
+    public images = {
+        archeological: 'najdisce',
+        church: 'cerkev',
+        historical: 'grad', // 'freska'
+        museum: 'muzej',
+        regional: 'domacija' // 'kulinarika', 'kozolec'
+    };
+	public questionIndex = 0;
+	public totalQuestions = 2;
 	public width = 0;
 	public offset = 0;
 	public progressBarUnit = 0;
 	public currentProgress = 0;
-    public images = ['cerkev', 'domacija', 'freska', 'grad', 'kozolec', 'kulinarika', 'najdisce'];
 
     constructor(
         private navCtrl: NavController,
         private platform: Platform,
-        private filterService: FilterService
+        private authService: AuthService,
+        private routeService: RouteService
     ) {
         platform.ready().then(readySource => {
             this.width = platform.width();
-            this.progressBarUnit = this.width / this.questionsNumber;
-            this.currentProgress = this.progressBarUnit;
         });
     }
 
-    ionViewDidLoad() { }
+    ionViewDidLoad() {
+        this.loading = true;
 
-    public goToHome() {
-        this.navCtrl.push(HomePage);
+        Observable.forkJoin([
+            this.authService.getUser(),
+            this.routeService.getFilters()
+        ]).subscribe(
+            (responses: any[]) => {
+                const [user, filters] = responses;
+                this.username = user.username.toUpperCase();
+                this.filters = filters;
+
+                this.totalQuestions += this.filters.length;
+                this.progressBarUnit = this.width / this.totalQuestions;
+                this.currentProgress = this.progressBarUnit;
+
+                this.loading = false;
+            },
+            (errors: any[]) => {
+                const statuses = errors.map(error => error.status);
+                if (statuses.indexOf(401) >= 0) {
+                    this.authService.logout();
+                    this.navCtrl.setRoot(LoginPage);
+                }
+            }
+        );
     }
 
-    nextQuestion(counter: number) {
-  	    this.questionCounter++;
+    public setTravelDuration(travelDuration: string) {
+        this.routeService.setTravelDuration(travelDuration);
+        this.nextQuestion();
+    }
 
-        if (this.questionCounter === this.questionsNumber - 1) {
+    public setTravelMethod(travelMethod: string) {
+        this.routeService.setTravelMethod(travelMethod);
+        this.nextQuestion();
+    }
+
+    public addPreference(filter: string) {
+        this.routeService.addPreference(filter);
+        this.nextQuestion();
+    }
+
+    public nextQuestion() {
+        this.questionIndex++;
+
+        if (this.questionIndex === this.totalQuestions) {
             this.navCtrl.push(DashboardPage);
         }
 
-  	    this.offset = this.width * this.questionCounter + 100 * this.questionCounter;
-  	    this.currentProgress += this.progressBarUnit;
+        this.offset = this.width * this.questionIndex + 100 * this.questionIndex;
+        this.currentProgress += this.progressBarUnit;
     }
 
 }

@@ -1,4 +1,4 @@
-import { Injectable, isDevMode } from "@angular/core";
+import { Injectable, isDevMode } from '@angular/core';
 import { environment } from '../environments/environment';
 import { environmentProd } from '../environments/environment.prod';
 

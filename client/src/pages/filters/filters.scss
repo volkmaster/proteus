@@ -1,14 +1,17 @@
 page-filters {
-    .header {
-        padding          : 10px;
-        display          : flex;
-        justify-content  : center;
-        text-align       : center;
-        background-color : $pomegranate;
+    .loader {
+        width        : 50%;
+        margin-left  : auto;
+        margin-right : auto;
+        padding-top  : 150px;
+        display      : block;
+    }
 
-    	.logo {
-    		height: 70px;
-    	}
+    ion-spinner * {
+        width  : 50px !important;
+        height : 50px !important;
+        stroke : $tundora;
+        fill   : $mine-shaft;
     }
 
     .content-wrapper {
@@ -73,7 +76,7 @@ page-filters {
     	width: 150px;
     }
 
-    .button-img2 {
+    .button-img--preference {
         width: 60px;
     }
 

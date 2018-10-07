@@ -15,24 +15,25 @@ import { AuthService } from '../providers/auth.service';
 import { EnvironmentService } from '../providers/environment.service';
 import { HttpService } from '../providers/http.service';
 import { RequestService } from '../providers/request.service';
-import { FilterService } from '../providers/filter.service';
+import { RouteService } from '../providers/route.service';
 import { GeoService } from '../providers/geo.service';
 import { LocalStorageService } from '../providers/local-storage.service';
 import { ToastService } from '../providers/toast.service';
 
 // Pages
-import { MyApp }            from './app.component';
-import { HomePage }         from '../pages/home/home';
-import { FiltersPage }      from '../pages/filters/filters';
-import { DashboardPage }    from '../pages/dashboard/dashboard';
-import { DetailsPage }      from '../pages/details/details';
-import { MapsPage }         from '../pages/maps/maps';
-import { QrCodePage }       from '../pages/qr-code/qr-code';
-import { LoginPage }        from '../pages/login/login';
-import { RegisterPage }     from '../pages/register/register';
+import { MyApp } from './app.component';
+import { HomePage } from '../pages/home/home';
+import { FiltersPage } from '../pages/filters/filters';
+import { DashboardPage } from '../pages/dashboard/dashboard';
+import { DetailsPage } from '../pages/details/details';
+import { MapsPage } from '../pages/maps/maps';
+import { QrCodePage } from '../pages/qr-code/qr-code';
+import { LoginPage } from '../pages/login/login';
+import { RegisterPage } from '../pages/register/register';
 
 // Components
-import { ListComponent } from '../components/list-component';
+import { HeaderComponent } from '../components/header/header.component';
+import { ListComponent } from '../components/list/list.component';
 
 // Interceptors
 import { TokenInterceptor } from '../providers/token.interceptor';
@@ -41,6 +42,7 @@ import { TokenInterceptor } from '../providers/token.interceptor';
     declarations: [
         MyApp,
         HomePage,
+        HeaderComponent,
         FiltersPage,
         DashboardPage,
         ListComponent,
@@ -60,6 +62,7 @@ import { TokenInterceptor } from '../providers/token.interceptor';
         MyApp,
         HomePage,
         FiltersPage,
+        HeaderComponent,
         DashboardPage,
         ListComponent,
         DetailsPage,
@@ -82,7 +85,7 @@ import { TokenInterceptor } from '../providers/token.interceptor';
         HttpService,
         RequestService,
         { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
-        FilterService,
+        RouteService,
         GeoService,
         LocalStorageService,
         ToastService

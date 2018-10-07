@@ -24,8 +24,8 @@ export class DetailsPage {
     ) { }
 
     ionViewDidLoad() {
-        if (this.navParams.get('heritage')) {
-            this.object = this.navParams.get('heritage');
+        if (this.navParams.get('location')) {
+            this.object = this.navParams.get('location');
         }
     }
 
@@ -33,7 +33,7 @@ export class DetailsPage {
         if (this.object) {
             this.nativeAudio.play(this.object.sound);
         } else {
-            this.toastService.show('This Heritage site does not have a detailed audio description.', 2000, 'bottom');
+            this.toastService.show('This location does not have a detailed audio description.', 2000, 'bottom');
         }
     }
 

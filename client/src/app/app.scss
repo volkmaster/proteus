@@ -21,14 +21,15 @@ $mandys-pink : #F3D2B7;
 $pomegranate : #EF4C24;
 $punch       : #D34527;
 $mojo        : #C95740;
+$tory-blue   : #154693;
 $black       : #000000;
 $tundora     : #444444;
 $mine-shaft  : #222222;
 
 
 $font-light   : HKGrotesk-Light;
-$font-bold    : HKGrotesk-Bold;
 $font-regular : HKGrotesk-Regular;
+$font-bold    : HKGrotesk-Bold;
 
 * {
     box-sizing: border-box;
@@ -38,7 +39,7 @@ body {
     padding                 : 0;
     margin                  : 0;
     color                   : $black;
-    font-family             : $font-light;
+    font-family             : $font-regular;
     -webkit-font-smoothing  : antialiased;
     -moz-osx-font-smoothing : grayscale;
 }

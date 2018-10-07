@@ -1,6 +1,10 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 
+// Services
+import { AuthService } from '../../providers/auth.service';
+import { RouteService } from '../../providers/route.service';
+
 // Pages
 import { FiltersPage } from '../filters/filters';
 
@@ -10,9 +14,21 @@ import { FiltersPage } from '../filters/filters';
 })
 export class HomePage {
 
-    constructor(private navCtrl: NavController) { }
+    public username = '';
 
-    ionViewDidLoad() { }
+    constructor(
+        private navCtrl: NavController,
+        private authService: AuthService,
+        private routeService: RouteService
+    ) { }
+
+    ionViewDidLoad() {
+        this.authService.getUser().subscribe((user: any) => {
+            this.username = user.username.toUpperCase();
+        });
+
+        this.routeService.resetRoute();
+    }
 
     public goToFilters() {
         this.navCtrl.push(FiltersPage);

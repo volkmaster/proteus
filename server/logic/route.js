@@ -60,7 +60,7 @@ const BUILDING_TYPES = {
     'museum': 'BUILDING_TYPE_MUSEUM',
     'regional': 'BUILDING_TYPE_REGIONAL',
     'archeological': 'BUILDING_TYPE_ARCHEOLOGICAL',
-    'historical': 'BUILDING_TYPE_HISTORICAL',
+    'historical': 'BUILDING_TYPE_HISTORICAL'
 }
 
 // Map the location type to something we can recognize and work with easily
@@ -217,8 +217,9 @@ async function generateRoute(params) {
     const route = []
 
     // Keep track of what time of the day it currently is
-    let startTime = DAY_DURATION[params.travelDuration][0]
-    let endTime = DAY_DURATION[params.travelDuration][1]
+    const duration = DAY_DURATION[params.travelDuration]
+    let startTime = duration[0]
+    let endTime = duration[1]
     let currentTime = startTime.clone()
 
     // We'll keep track of preference probabilities so that the same type
@@ -281,15 +282,15 @@ async function generateRoute(params) {
 
         // How long will it take to get from where we are now to where we want to go?
         const driveTime = getTravelTimeBetween(previousCoords, currentCoords, params.travelMethod)
-        routeNode['travelStartTime'] = currentTime
+        routeNode['travelStartTime'] = currentTime.clone()
         routeNode['travelDuration'] = driveTime
         currentTime = currentTime.add(driveTime, 'minutes')
 
         // How long will we stay there?
         const visitDuration = BUILDING_TYPE_VISIT_DURATION[BUILDING_TYPE_MAPPING[location.type]]
-        routeNode['visitStartTime'] = currentTime
+        routeNode['visitStartTime'] = currentTime.clone()
         currentTime = currentTime.add(visitDuration, 'minutes')
-        routeNode['visitEndTime'] = currentTime
+        routeNode['visitEndTime'] = currentTime.clone()
         routeNode['visitDuration'] = visitDuration
 
         route.push(routeNode)

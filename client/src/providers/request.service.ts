@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
-import { NavController } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/throw';
@@ -11,14 +10,10 @@ import { EnvironmentService } from './environment.service';
 import { HttpService } from './http.service';
 import { ToastService } from './toast.service';
 
-// Pages
-import { LoginPage } from '../pages/login/login';
-
 @Injectable()
 export class RequestService {
 
     constructor(
-        private navCtrl: NavController,
         private environmentService: EnvironmentService,
         private httpService: HttpService,
         private toastService: ToastService
@@ -54,9 +49,7 @@ export class RequestService {
     }
 
     private handleError(url: string) {
-        return (error: any): Observable<HttpErrorResponse> => {
-            debugger;
-
+        return (error: any): Observable<any> => {
             let message = '';
 
             if (error.error instanceof ErrorEvent) {
@@ -65,19 +58,21 @@ export class RequestService {
                 switch (error.status) {
                     case 0:
                         message = 'Server is inaccessible. Contact the support.';
+                        this.toastService.show(message, 2000, 'top');
                         break;
-                    case 401: // unauthenticated
-                    case 403: // forbidden
-                        message = error.message; // seja je potekla
-                        this.navCtrl.push(LoginPage);
-                        break;
+                    case 401:
+                        if (url !== '/auth/verify') {
+                            message = 'Session has expired. Log in.';
+                            this.toastService.show(message, 2000, 'top');
+                        } else {
+                            message = error.error;
+                        }
                     default:
-                        message = error.message;
+                        message = error.error;
                         break;
                 }
             }
 
-            this.toastService.show(message, 2000, 'top');
             console.error(`Request to ${url} failed: ${message}`);
 
             return Observable.throw(error);

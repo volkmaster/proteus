@@ -1,30 +1,29 @@
+<header-component
+    [background]="'#EF4C24'"
+    [logo]="{ theme: 'light', visible: true }">
+</header-component>
 <div class="content">
-        <div class="header">
-            <img class="logo" src="../../assets/imgs/logo_light.svg"/>
-        </div>
-        <div class="content-body">
-            <form class="form" [formGroup]="registerForm" (ngSubmit)="register()">
-                <div class="form-group">
-                    <input class="form-control username-control" type="text" id="name" name="name" placeholder="USERNAME" formControlName="username"/>
-                </div>
+    <div class="content-body">
+        <form class="form" [formGroup]="registerForm" (ngSubmit)="register()">
+            <div class="form-group">
+                <input class="form-control username-control" type="text" id="name" name="name" placeholder="USERNAME" formControlName="username"/>
+            </div>
 
-                <div class="form-group">
-                    <input class="form-control password-control" type="password" id="password" name="password" placeholder="PASSWORD" formControlName="password"/>
-                </div>
+            <div class="form-group">
+                <input class="form-control password-control" type="password" id="password" name="password" placeholder="PASSWORD" formControlName="password"/>
+            </div>
 
-                <div class="form-group">
-                    <input class="form-control password-control" type="password" id="passwordConf" name="passwordConf" placeholder="CONFIRM PASSWORD" formControlName="passwordConf"/>
-                </div>
+            <div class="form-group">
+                <input class="form-control password-control" type="password" id="passwordConfirmation" name="passwordConfirmation" placeholder="CONFIRM PASSWORD" formControlName="passwordConfirmation"/>
+            </div>
 
-                <div class="error">
-                    {{ error }}
-                </div>
+            <div class="error">{{ error }}</div>
 
-                <button class="form-button" type="submit" [disabled]="!registerForm.valid">Register</button>
-            </form>
-        </div>
-        <div class="content-footer">
-            <p>ALREADY A PROTEUS USER?</p>
-            <p class="reg-btn" (click)="toLogin()">LOGIN</p>
-        </div>
+            <button class="form-button" type="submit" [disabled]="!registerForm.valid">Register</button>
+        </form>
     </div>
+    <div class="content-footer">
+        <p>ALREADY A PROTEUS USER?</p>
+        <p class="link-button" (click)="goToLogin()">LOGIN</p>
+    </div>
+</div>

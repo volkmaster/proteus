@@ -10,7 +10,7 @@ router.use(verifyToken)
 router.get('/', async (req, res, next) => {
     try {
         const locations = await locationLogic.all()
-        res.status(200).send(locations)
+        res.status(200).json(locations)
     } catch (error) {
         sendError(res, error)
     }
@@ -35,7 +35,7 @@ router.post('/', verifyAdmin, async (req, res, next) => {
 
     try {
         const location = await locationLogic.create(data)
-        res.status(201).send(location._id)
+        res.status(201).json(location._id)
     } catch (error) {
         sendError(res, error)
     }

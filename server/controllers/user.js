@@ -10,7 +10,7 @@ router.use(verifyToken)
 router.get('/', async (req, res, next) => {
     try {
         const users = await userLogic.all()
-        res.status(200).send(users)
+        res.status(200).json(users)
     } catch (error) {
         sendError(res, error)
     }
@@ -19,7 +19,7 @@ router.get('/', async (req, res, next) => {
 router.get('/me', async (req, res, next) => {
     try {
         const user = await userLogic.get(req.decoded.id)
-        res.status(200).send(user)
+        res.status(200).json(user)
     } catch (error) {
         sendError(res, error)
     }

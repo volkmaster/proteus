@@ -49,7 +49,7 @@ router.post('/login', async (req, res, next) => {
     // Check if the user with the given username exists
     const users = await userLogic.all({ username: data.username }, false)
     if (users.length === 0) {
-        return res.status(404).send('Invalid username.')
+        return res.status(400).send('Invalid username.')
     }
 
     const user = users[0]
@@ -57,7 +57,7 @@ router.post('/login', async (req, res, next) => {
     // Compare passwords
     bcrypt.compare(data.password, user.password, (error, same) => {
         if (!same) {
-            res.status(401).send('Invalid password.')
+            res.status(400).send('Invalid password.')
         } else {
              // Generate a token
             const payload = {
@@ -66,7 +66,7 @@ router.post('/login', async (req, res, next) => {
                 admin: user.admin
             }
             const token = jwt.sign(payload, process.env.JWT_SECRET)
-            res.status(201).send({ token })
+            res.status(201).json({ token })
         }
     })
 })
