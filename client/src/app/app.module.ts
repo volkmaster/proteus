@@ -26,7 +26,6 @@ import { HomePage } from '../pages/home/home';
 import { FiltersPage } from '../pages/filters/filters';
 import { DashboardPage } from '../pages/dashboard/dashboard';
 import { DetailsPage } from '../pages/details/details';
-import { MapsPage } from '../pages/maps/maps';
 import { QrCodePage } from '../pages/qr-code/qr-code';
 import { LoginPage } from '../pages/login/login';
 import { RegisterPage } from '../pages/register/register';
@@ -47,7 +46,6 @@ import { TokenInterceptor } from '../providers/token.interceptor';
         DashboardPage,
         ListComponent,
         DetailsPage,
-        MapsPage,
         QrCodePage,
         LoginPage,
         RegisterPage
@@ -66,7 +64,6 @@ import { TokenInterceptor } from '../providers/token.interceptor';
         DashboardPage,
         ListComponent,
         DetailsPage,
-        MapsPage,
         QrCodePage,
         LoginPage,
         RegisterPage

@@ -14,6 +14,7 @@ import { DashboardPage } from '../dashboard/dashboard';
 })
 export class DetailsPage {
 
+    public loading = false;
     public object: any = null;
 
     constructor(

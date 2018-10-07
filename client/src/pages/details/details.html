@@ -1,15 +1,24 @@
-<div class="top">
-    <img src="../../assets/imgs/icon_close.png" class="close-icon" (click)="close()">
-    <h1 class="title">{{ object?.title }}</h1>
+<header-component
+    [background]="'#FFCCCC'"
+    [logo]="{ theme: 'dark', visible: true, action: 'home' }"
+    [left]="{ text: username, color: '#EF4C24' }"
+    [right]="{ text: 'ODJAVA', action: 'logout', color: '#EF4C24' }">
+</header-component>
+<div *ngIf="loading" class="content-wrapper">
+    <img class="loader" src="../../assets/imgs/spinner_white.svg"/>
 </div>
-<div class="content">
-    <img *ngIf="object?.image" [src]="object.image"/>
-</div>
-<div class="bottom">
-    <div *ngIf="object?.sound" (click)="playAudio()">
-        <img src="../../assets/imgs/icon_play.png" class="play-icon"/>
-    </div>
-    <div class="description">
-        <p>{{ object?.description }}</p>
+<div *ngIf="!loading" class="content-wrapper">
+    <div class="content">
+        <div class="top">
+            <img class="close-icon" src="../../assets/imgs/icon_close.png" (click)="close()">
+            <h1 class="title">{{ object?.title }}</h1>
+        </div>
+        <div *ngIf="object?.image" class="image-wrapper">
+            <img [src]="'../../assets/imgs/' + object.image"/>
+        </div>
+        <div *ngIf="object?.sound" class="sound-wrapper" (click)="playAudio()">
+            <img class="play-icon" src="../../assets/imgs/icon_play.png"/>
+        </div>
+        <p class="description">{{ object?.description }}</p>
     </div>
 </div>

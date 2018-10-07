@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 // Services
@@ -15,6 +15,7 @@ import { RegisterPage } from '../register/register';
 })
 export class LoginPage {
 
+    public loading = true;
     public loginForm = this.formBuilder.group({
         username: ['', [Validators.required]],
         password: ['', [Validators.required]]
@@ -31,28 +32,45 @@ export class LoginPage {
 
     constructor(
         private navCtrl: NavController,
+        private navParams: NavParams,
         private formBuilder: FormBuilder,
         private authService: AuthService
     ) { }
 
     ionViewDidEnter() {
+        this.loading = true;
+
         this.authService.isLoggedIn().subscribe((loggedIn: boolean) => {
             if (loggedIn) {
                 this.navCtrl.push(HomePage);
             }
+            this.loading = false;
         });
+
         this.loginForm.valueChanges.subscribe(() => this.onValueChanged());
     }
 
+    ionViewDidLoad() {
+        this.error = this.navParams.get('message');
+    }
+
     public login() {
+        if (!this.loginForm.valid) {
+            return;
+        }
+
+        this.loading = true;
+
         this.authService.login(this.loginForm.value.username, this.loginForm.value.password).subscribe(
             (data: any) => {
                 this.navCtrl.push(LoginPage);
+                this.loading = false;
             },
             (error: any) => {
                 if (error.status === 400) {
                     this.error = error.error;
                 }
+                this.loading = false;
             }
         );
     }

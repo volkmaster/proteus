@@ -6,6 +6,7 @@ import { AuthService } from '../../providers/auth.service';
 import { RouteService } from '../../providers/route.service';
 
 // Pages
+import { LoginPage } from '../login/login';
 import { FiltersPage } from '../filters/filters';
 
 @Component({
@@ -14,6 +15,7 @@ import { FiltersPage } from '../filters/filters';
 })
 export class HomePage {
 
+    public loading = true;
     public username = '';
 
     constructor(
@@ -23,9 +25,21 @@ export class HomePage {
     ) { }
 
     ionViewDidLoad() {
-        this.authService.getUser().subscribe((user: any) => {
-            this.username = user.username.toUpperCase();
-        });
+        this.loading = true;
+
+        this.authService.getUser().subscribe(
+            (user: any) => {
+                this.username = user.username.toUpperCase();
+                this.loading = false;
+            },
+            (error: any) => {
+                if (error.status === 401) {
+                    this.authService.logout();
+                    this.navCtrl.setRoot(LoginPage);
+                }
+                this.loading = false;
+            }
+        );
 
         this.routeService.resetRoute();
     }

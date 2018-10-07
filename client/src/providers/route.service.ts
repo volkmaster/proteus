@@ -44,7 +44,7 @@ export class RouteService {
 
     public getRoute(): Observable<any[]> {
         if (this.route) {
-            return this.route;
+            return Observable.of(this.route);
         }
 
         return this.requestService.post('/routes', this.routeParams)

@@ -5,7 +5,6 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { NativeAudio } from '@ionic-native/native-audio';
 
 // Pages
-import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
 
 @Component({

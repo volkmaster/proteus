@@ -18,6 +18,7 @@ import { PasswordValidator } from '../../shared/password.validator';
 })
 export class RegisterPage {
 
+    public loading = true;
     public registerForm = this.formBuilder.group({
         username: ['', [Validators.required, Validators.minLength(3)]],
         password: ['', [Validators.required, Validators.minLength(6)]],
@@ -35,7 +36,7 @@ export class RegisterPage {
         passwordConfirmation: {
             required: 'Password is required.',
             minlength: 'Password must be at least 6 characters long.',
-            matchPassword: 'Password and its confirmation do not match.'
+            matchPassword: 'Passwords must match.'
         }
     };
     public error = '';
@@ -47,22 +48,34 @@ export class RegisterPage {
     ) { }
 
     ionViewDidEnter() {
+        this.loading = true;
+
         this.authService.isLoggedIn().subscribe((loggedIn: boolean) => {
             if (loggedIn) {
                 this.navCtrl.push(HomePage);
             }
+            this.loading = false;
         });
+
         this.registerForm.valueChanges.subscribe(() => this.onValueChanged());
     }
 
     public register() {
+        if (!this.registerForm.valid) {
+            return;
+        }
+
+        this.loading = true;
+
         this.authService.register(this.registerForm.value.username, this.registerForm.value.password).subscribe(
             (data: any) => {
-                this.navCtrl.push(LoginPage);
+                this.navCtrl.push(LoginPage, { message: 'Registration was successful. Please log in with your username and password.' });
+                this.loading = false;
             },
             (error: any) => {
                 if (error.status === 400) {
                     this.error = error.error;
+                    this.loading = false;
                 }
             }
         );

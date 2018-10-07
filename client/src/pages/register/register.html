@@ -2,7 +2,10 @@
     [background]="'#EF4C24'"
     [logo]="{ theme: 'light', visible: true }">
 </header-component>
-<div class="content">
+<div *ngIf="loading" class="content">
+    <img class="loader" src="../../assets/imgs/spinner_white.svg"/>
+</div>
+<div *ngIf="!loading" class="content">
     <div class="content-body">
         <form class="form" [formGroup]="registerForm" (ngSubmit)="register()">
             <div class="form-group">
@@ -19,7 +22,7 @@
 
             <div class="error">{{ error }}</div>
 
-            <button class="form-button" type="submit" [disabled]="!registerForm.valid">Register</button>
+            <button class="form-button" type="submit" >Register</button>
         </form>
     </div>
     <div class="content-footer">

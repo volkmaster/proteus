@@ -4,11 +4,13 @@
     [left]="{ text: username, color: '#EF4C24' }"
     [right]="{ text: 'ODJAVA', action: 'logout', color: '#EF4C24' }">
 </header-component>
-<div class="content-wrapper">
-    <img *ngIf="loading" class="loader" src="../../assets/imgs/spinner.svg"/>
-    <div *ngIf="!loading" class="plan-list">
+<div *ngIf="loading" class="content-wrapper">
+    <img class="loader" src="../../assets/imgs/spinner_green.svg"/>
+</div>
+<div *ngIf="!loading" class="content-wrapper">
+    <div class="plan-list">
         <list-component [object]="node" [isFirst]="i === 0" [isLast]="i === route.length - 1" *ngFor="let node of route; let i = index"></list-component>
-        <div class="button button-maps" (click)="goToMaps()">Go</div>
+        <div class="button button-google-maps" (click)="launchGoogleMaps()">Go</div>
         <div class="button button-qr-code" (click)="goToQrCode()">QR code</div>
     </div>
 </div>

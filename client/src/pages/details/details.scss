@@ -1,53 +1,57 @@
 page-details {
-    .top {
-        position         : relative;
-        width            : 100%;
-        height           : 24%;
-        background-color : $eucalyptus;
-        text-align       : center;
-
-        .close-icon {
-            position : absolute;
-            top      : 20px;
-            right    : 15px;
-        }
-
-        .title {
-            position  : absolute;
-            bottom    : 10px;
-            width     : 100%;
-            margin    : 0 !important;
-            padding   : 0 !important;
-            color     : $pink;
-            font-size : 25px;
-        }
-    }
-
-    .content {
+    .content-wrapper {
         width            : 100%;
         height           : 100%;
-        padding-top      : 20px;
         background-color : $eucalyptus;
-    }
+        overflow-y       : scroll;
 
-    .bottom {
-        position         : absolute;
-        bottom           : 0;
-        width            : 100%;
-        min-height       : 40%;
-        background-color : $eucalyptus;
-    }
+        .content {
+            height     : 85%;
+            overflow-y : scroll;
 
-    .play-icon {
-        position    : absolute;
-        left        : 40%;
-        width       : 20%;
-        padding-top : 20px;
-    }
+            .top {
+                position   : relative;
+                height     : 110px;
+                text-align : center;
 
-    .description {
-        padding   : 110px 20px 0 20px;
-        color     : white;
-        font-size : 17px;
+                .close-icon {
+                    position : absolute;
+                    top      : 20px;
+                    right    : 15px;
+                }
+
+                .title {
+                    position  : absolute;
+                    bottom    : 10px;
+                    width     : 100%;
+                    margin    : 0 !important;
+                    padding   : 0 !important;
+                    color     : $pink;
+                    font-size : 25px;
+                }
+            }
+
+            .image-wrapper {
+                padding-top : 20px;
+            }
+
+
+            .sound-wrapper {
+                padding-top     : 20px;
+                display         : flex;
+                justify-content : center;
+
+                .play-icon {
+                    width  : 80px;
+                    height : 80px;
+                }
+            }
+
+            .description {
+                padding   : 10px 20px;
+                color     : $pink;
+                font-size : 17px;
+            }
+        }
     }
 }

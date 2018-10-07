@@ -70,6 +70,7 @@ export class FiltersPage {
                     this.authService.logout();
                     this.navCtrl.setRoot(LoginPage);
                 }
+                this.loading = false;
             }
         );
     }

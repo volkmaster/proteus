@@ -1,15 +1,17 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, Platform } from 'ionic-angular';
+import { LaunchNavigator } from '@ionic-native/launch-navigator';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/forkJoin';
 
 // Services
 import { AuthService } from '../../providers/auth.service';
 import { RouteService } from '../../providers/route.service';
+import { ToastService } from '../../providers/toast.service';
 
 // Pages
 import { LoginPage } from '../login/login';
-import { MapsPage } from '../maps/maps';
+import { HomePage } from '../home/home';
 import { QrCodePage } from '../qr-code/qr-code';
 
 @Component({
@@ -23,9 +25,12 @@ export class DashboardPage {
     public route = null;
 
     constructor(
+        private platform: Platform,
         private navCtrl: NavController,
+        private launchNavigator: LaunchNavigator,
         private authService: AuthService,
-        private routeService: RouteService
+        private routeService: RouteService,
+        private toastService: ToastService
     ) { }
 
     ionViewDidLoad() {
@@ -47,15 +52,42 @@ export class DashboardPage {
                     this.authService.logout();
                     this.navCtrl.setRoot(LoginPage);
                 }
+                this.loading = false;
             }
         );
     }
 
-    public goToMaps() {
-        this.navCtrl.push(MapsPage);
+    public launchGoogleMaps() {
+        if (!this.platform.is('cordova')) {
+            return;
+        }
+
+        //let destination = '46.5578150128,15.6441992715+to:46.1897107375,13.5781269643+to:46.4033908192,15.789574195+to:46.0531350293,14.4941779725+to:46.0507936357,14.4998464159';
+
+        let destination = '';
+        let i = 0;
+        for (const node of this.route) {
+            destination += `${node.latitude},${node.longitude}`;
+            if (i++ < this.route.length - 1) {
+                destination += '+to:';
+            }
+        }
+        console.log(destination);
+
+        this.launchNavigator.isAppAvailable(this.launchNavigator.APP.GOOGLE_MAPS).then((isAvailable: boolean) => {
+            if (isAvailable) {
+                this.launchNavigator.navigate(destination)
+                    .then(() => { })
+                    .catch(error => this.toastService.show('Error launching Google Maps: ' + error, 5000));
+            }
+        });
     }
 
     public goToQrCode() {
+        if (!this.platform.is('cordova')) {
+            return;
+        }
+
         this.navCtrl.push(QrCodePage);
     }
 
@@ -171,4 +203,5 @@ export class DashboardPage {
             }
         ]
     ];
+
 }

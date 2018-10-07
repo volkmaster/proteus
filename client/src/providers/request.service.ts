@@ -62,7 +62,7 @@ export class RequestService {
                         break;
                     case 401:
                         if (url !== '/auth/verify') {
-                            message = 'Session has expired. Log in.';
+                            message = 'Session has expired. Please log in again.';
                             this.toastService.show(message, 2000, 'top');
                         } else {
                             message = error.error;

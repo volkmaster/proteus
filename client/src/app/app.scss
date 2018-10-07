@@ -54,3 +54,18 @@ img {
     -ms-user-select     : none;
     user-select         : none;
 }
+
+.loader {
+    width        : 50%;
+    margin-left  : auto;
+    margin-right : auto;
+    padding-top  : 150px;
+    display      : block;
+}
+
+ion-spinner * {
+    width  : 50px !important;
+    height : 50px !important;
+    stroke : $tundora;
+    fill   : $mine-shaft;
+}
