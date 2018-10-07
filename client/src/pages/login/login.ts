@@ -7,6 +7,7 @@ import { AuthService } from '../../providers/auth.service';
 
 // Pages
 import { FiltersPage } from '../filters/filters';
+import { RegisterPage } from '../register/register';
 
 @Component({
     selector: 'page-login',
@@ -39,12 +40,11 @@ export class LoginPage {
             if (loggedIn) {
                 this.navCtrl.push(FiltersPage);
             }
-            this.loginForm.valueChanges.subscribe(() => this.onValueChanged());
         });
+        this.loginForm.valueChanges.subscribe(() => this.onValueChanged());
     }
 
     public login() {
-        debugger;
         this.authService.login(this.loginForm.value.username, this.loginForm.value.password).subscribe(
             data => {
                 this.navCtrl.push(FiltersPage);
@@ -56,6 +56,10 @@ export class LoginPage {
 
     public logout() {
         this.authService.logout();
+    }
+
+    public toRegister() {
+        this.navCtrl.setRoot(RegisterPage);
     }
 
     private onValueChanged() {
