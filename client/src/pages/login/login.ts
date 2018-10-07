@@ -44,7 +44,6 @@ export class LoginPage {
     }
 
     public login() {
-        debugger;
         this.authService.login(this.loginForm.value.username, this.loginForm.value.password).subscribe(
             data => {
                 this.navCtrl.push(FiltersPage);

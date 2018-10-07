@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
@@ -33,6 +33,9 @@ import { RegisterPage }     from '../pages/register/register';
 
 // Components
 import { ListComponent } from '../components/list-component';
+
+// Interceptors
+import { TokenInterceptor } from '../providers/token.interceptor';
 
 @NgModule({
     declarations: [
@@ -78,6 +81,7 @@ import { ListComponent } from '../components/list-component';
         EnvironmentService,
         HttpService,
         RequestService,
+        { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
         FilterService,
         GeoService,
         LocalStorageService,

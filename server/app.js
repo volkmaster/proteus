@@ -5,6 +5,7 @@ import express from 'express'
 import mongoose from 'mongoose'
 import 'babel-polyfill'
 import http from 'http'
+import cors from 'cors'
 import cookieParser from 'cookie-parser'
 import path from 'path'
 import logger from 'morgan'
@@ -21,6 +22,7 @@ const app = express()
 
 // configuration
 app.use(logger('dev'))
+app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
