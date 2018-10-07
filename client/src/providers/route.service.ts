@@ -1,4 +1,7 @@
 import { Injectable } from "@angular/core";
+import { RequestService } from '../providers/request.service';
+
+import { Observable } from 'rxjs';
 
 const latLj = 46.222;
 const lonLj = 15.2992;
@@ -13,6 +16,8 @@ export class RouteService {
         travelDuration: '',
         preferences: []
     }
+
+    constructor(public requestService: RequestService) {}
 
     public setLatLon(lat: number, lon: number) {
         if(!lat || !lon) {
@@ -35,5 +40,13 @@ export class RouteService {
 
     public getRouteObject() {
         return this.routeFilter;
+    }
+
+    public createRoute(): Observable<any> {
+        return this.requestService.post('/routes', this.routeFilter)
+            .map(response => {
+                console.log(response);
+                return response;
+            });
     }
 }

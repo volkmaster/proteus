@@ -5,10 +5,10 @@ import { LaunchNavigator } from '@ionic-native/launch-navigator';
 
 // Services
 import { RouteService } from '../../providers/route.service';
+import { ToastService } from '../../providers/toast.service';
 
 // Pages
 import { HomePage } from '../home/home';
-import { MapsPage } from '../maps/maps';
 import { QrCodePage } from '../qr-code/qr-code';
 
 @Component({
@@ -18,34 +18,66 @@ import { QrCodePage } from '../qr-code/qr-code';
 export class DashboardPage {
 
     public loading = false;
-
-    private transportMap = {
-        1: 'driving',
-        2: 'walking',
-        3: 'bicycling',
-        4: 'transit'
-    }
+    public routeObj: any = null;
 
     constructor(
         private navCtrl: NavController,
         private routeService: RouteService,
         private launchNavigator: LaunchNavigator,
+        private toastService: ToastService,
+        private platform: Platform
     ) { }
 
     ionViewDidLoad() {
         console.log(this.routeService.getRouteObject());
+
+        this.routeService.createRoute().subscribe((route) => {
+            this.loading = false;
+            this.routeObj = route;
+        }, error => {
+            this.loading = false;
+            console.log("Error occured " + error);
+        })
     }
 
     public goToHome() {
         this.navCtrl.push(HomePage);
     }
 
-    public goToMaps() {
+    private launchGoogleMaps(transportMode: number = 2) {
 
+        if(!this.platform.is('cordova')) {
+            console.log('Maps only work on mobile devices');
+            return;
+        }
+
+        // Hardcoded for now
+        let destination = "46.5578150128,15.6441992715+to:46.1897107375,13.5781269643+to:46.4033908192,15.789574195+to:46.0531350293,14.4941779725+to:46.0507936357,14.4998464159";
+
+        // launch Google Maps app
+        this.launchNavigator.isAppAvailable(this.launchNavigator.APP.GOOGLE_MAPS).then((isAvailable: boolean) => {
+            if (isAvailable) {
+                this.launchNavigator.navigate(destination)
+                    .then(() => this.onMapsSuccess())
+                    .catch(error => this.onMapsError(error));
+            }
+        });
+    }
+
+    private prepareTravelPlan() {
+        // Empty for now - Stub for method that will convert travel object into presentable format
     }
 
     public goToQrCode() {
         this.navCtrl.push(QrCodePage);
+    }
+
+    private onMapsSuccess() {
+        this.toastService.show('Maps successfully launched.', 5000);
+    }
+
+    private onMapsError(error: string) {
+        this.toastService.show('Error launching maps ' + error, 5000);
     }
 
     public scenarios = [

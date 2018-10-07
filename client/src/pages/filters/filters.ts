@@ -40,8 +40,6 @@ export class FiltersPage {
         });
     }
 
-    ionViewDidLoad() { }
-
     public goToHome() {
         this.navCtrl.push(HomePage);
     }

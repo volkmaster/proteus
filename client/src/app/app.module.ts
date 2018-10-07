@@ -26,7 +26,6 @@ import { HomePage }         from '../pages/home/home';
 import { FiltersPage }      from '../pages/filters/filters';
 import { DashboardPage }    from '../pages/dashboard/dashboard';
 import { DetailsPage }      from '../pages/details/details';
-import { MapsPage }         from '../pages/maps/maps';
 import { QrCodePage }       from '../pages/qr-code/qr-code';
 import { LoginPage }        from '../pages/login/login';
 import { RegisterPage }     from '../pages/register/register';
@@ -42,7 +41,6 @@ import { ListComponent } from '../components/list-component';
         DashboardPage,
         ListComponent,
         DetailsPage,
-        MapsPage,
         QrCodePage,
         LoginPage,
         RegisterPage
@@ -60,7 +58,6 @@ import { ListComponent } from '../components/list-component';
         DashboardPage,
         ListComponent,
         DetailsPage,
-        MapsPage,
         QrCodePage,
         LoginPage,
         RegisterPage
