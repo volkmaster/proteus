@@ -1,67 +1,68 @@
 {
-    "name": "Proteus",
-    "version": "0.0.1",
-    "description": "API of tourist assistant application named Proteus.",
-    "contributors": [
-        {
-            "name": "Tina Avbelj",
-            "email": "tina.avbelj@gmail.com"
-        },
-        {
-            "name": "Matevz Lenic",
-            "email": "matevz.lenic@gmail.com"
-        },
-        {
-            "name": "Pavlin Policar",
-            "email": "pavlin.g.p@gmail.com"
-        },
-        {
-            "name": "Ziga Vucko",
-            "email": "ziga.vucko@gmail.com",
-            "url": "http://gep.si"
-        }
-    ],
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/volkmaster/proteus"
+  "name": "Proteus",
+  "version": "0.0.1",
+  "description": "API of tourist assistant application named Proteus.",
+  "contributors": [
+    {
+      "name": "Tina Avbelj",
+      "email": "tina.avbelj@gmail.com"
     },
-    "license": "MIT",
-    "private": true,
-    "scripts": {
-        "dev": "DEBUG=proteus:* babel-watch --exclude ./dist,./node_modules,./LICENSE.txt,./package-lock.json,./package.json app.js",
-        "dev-win": "set DEBUG=proteus:* & babel-watch --exclude ./dist,./node_modules,./LICENSE.txt,./package-lock.json,./package.json app.js",
-        "devorg": "DEBUG=proteus:* npm run lint && babel-watch --exclude ./dist,./node_modules,./LICENSE.txt,./package-lock.json,./package.json app.js",
-        "debug": "DEBUG=proteus:* babel-watch --exclude ./dist,./node_modules,./LICENSE.txt,./package-lock.json,./package.json app.js --debug-brk --inspect app.js",
-        "debug-win": "set DEBUG=proteus:* & babel-watch --exclude ./dist,./node_modules,./LICENSE.txt,./package-lock.json,./package.json app.js --debug-brk --inspect app.js",
-        "start": "npm run build && node ./dist/app.js",
-        "build": "rimraf dist/ && babel ./ --out-dir dist/ --ignore ./node_modules,./LICENSE.txt,./package-lock.json,./package.json --copy-files",
-        "lint": "eslint --max-warnings 0 -c .eslintrc.json app.js controllers/ logic/ utils/"
+    {
+      "name": "Matevz Lenic",
+      "email": "matevz.lenic@gmail.com"
     },
-    "main": "./dist/app.js",
-    "dependencies": {
-        "@google-cloud/translate": "^2.1.2",
-        "bcrypt": "^3.0.1",
-        "cookie-parser": "^1.4.3",
-        "debug": "^2.6.9",
-        "dotenv": "^6.0.0",
-        "express": "^4.16.3",
-        "jsonwebtoken": "^8.3.0",
-        "moment": "^2.22.2",
-        "moment-timezone": "^0.5.21",
-        "mongoose": "^5.3.1",
-        "morgan": "^1.9.1"
+    {
+      "name": "Pavlin Policar",
+      "email": "pavlin.g.p@gmail.com"
     },
-    "devDependencies": {
-        "babel-cli": "^6.26.0",
-        "babel-core": "^6.26.3",
-        "babel-eslint": "^9.0.0",
-        "babel-loader": "^8.0.4",
-        "babel-polyfill": "^6.26.0",
-        "babel-preset-env": "^1.7.0",
-        "babel-preset-es2015": "^6.24.1",
-        "babel-preset-stage-0": "^6.24.1",
-        "babel-watch": "^2.0.7",
-        "eslint": "^3.3.1",
-        "rimraf": "^2.6.2"
+    {
+      "name": "Ziga Vucko",
+      "email": "ziga.vucko@gmail.com",
+      "url": "http://gep.si"
     }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/volkmaster/proteus"
+  },
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "dev": "DEBUG=proteus:* babel-watch --exclude ./dist,./node_modules,./LICENSE.txt,./package-lock.json,./package.json app.js",
+    "dev-win": "set DEBUG=proteus:* & babel-watch --exclude ./dist,./node_modules,./LICENSE.txt,./package-lock.json,./package.json app.js",
+    "devorg": "DEBUG=proteus:* npm run lint && babel-watch --exclude ./dist,./node_modules,./LICENSE.txt,./package-lock.json,./package.json app.js",
+    "debug": "DEBUG=proteus:* babel-watch --exclude ./dist,./node_modules,./LICENSE.txt,./package-lock.json,./package.json app.js --debug-brk --inspect app.js",
+    "debug-win": "set DEBUG=proteus:* & babel-watch --exclude ./dist,./node_modules,./LICENSE.txt,./package-lock.json,./package.json app.js --debug-brk --inspect app.js",
+    "start": "npm run build && node ./dist/app.js",
+    "build": "rimraf dist/ && babel ./ --out-dir dist/ --ignore ./node_modules,./LICENSE.txt,./package-lock.json,./package.json --copy-files",
+    "lint": "eslint --max-warnings 0 -c .eslintrc.json app.js controllers/ logic/ utils/"
+  },
+  "main": "./dist/app.js",
+  "dependencies": {
+    "@google-cloud/translate": "^2.1.2",
+    "bcrypt": "^3.0.1",
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.3",
+    "debug": "^2.6.9",
+    "dotenv": "^6.0.0",
+    "express": "^4.16.3",
+    "jsonwebtoken": "^8.3.0",
+    "moment": "^2.22.2",
+    "moment-timezone": "^0.5.21",
+    "mongoose": "^5.3.1",
+    "morgan": "^1.9.1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-eslint": "^9.0.0",
+    "babel-loader": "^8.0.4",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "babel-watch": "^2.0.7",
+    "eslint": "^3.3.1",
+    "rimraf": "^2.6.2"
+  }
 }
