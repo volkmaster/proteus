@@ -2,35 +2,72 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
+// Services
 import { AuthService } from '../../providers/auth.service';
+
+// Pages
+import { FiltersPage } from '../filters/filters';
+import { LoginPage } from '../login/login';
 
 @Component({
     selector: 'page-register',
     templateUrl: 'register.html'
 })
 export class RegisterPage {
-    public fgRegister: FormGroup;
-    public usr: any = null;
 
-    constructor(private authService: AuthService,
-                private fb: FormBuilder,
-                private navCtrl: NavController) {}
-
-
+    public registerForm = this.formBuilder.group({
+        username: ['', [Validators.required, Validators.minLength(3)]],
+        password: ['', [Validators.required, Validators.minLength(6)]]
+    });
     public validationMessages = {
-        'username': {
-            'required':     'Missing username',
-            'minlength':    'Username too short'
+        username: {
+            required: 'Username is required.',
+            minlength: 'Username must be at least 3 characters long.'
         },
-        'password': {
-            'required':     'Missing password',
-            'minlength':    'Password should be at least 6 characters long.'
+        password: {
+            required: 'Password is required.',
+            minlength: 'Password must be at least 6 characters long.'
         }
     };
+    public error = '';
 
-    public formErrors = {
-        'username': '',
-        'password': '',
-    };
+    constructor(
+        private navCtrl: NavController,
+        private formBuilder: FormBuilder,
+        private authService: AuthService
+    ) { }
+
+    ionViewDidEnter() {
+        this.authService.isLoggedIn().subscribe((loggedIn: boolean) => {
+            if (loggedIn) {
+                this.navCtrl.push(FiltersPage);
+            }
+            this.registerForm.valueChanges.subscribe(() => this.onValueChanged());
+        });
+    }
+
+    public register() {
+        this.authService.register(this.registerForm.value.username, this.registerForm.value.password).subscribe(
+            data => {
+                this.navCtrl.push(LoginPage);
+            },
+            error => {
+                console.log(error);
+            });
+    }
+
+    private onValueChanged() {
+        this.error = '';
+
+        for (const field in this.registerForm.controls) {
+            const control = this.registerForm.get(field);
+            if (control.dirty && !control.valid && control.errors) {
+                for (const type in control.errors) {
+                    this.error = this.validationMessages[field][type];
+                    return;
+                }
+            }
+        }
+    }
 
 }

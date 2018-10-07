@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
 
 // Services
 import { RequestService } from './request.service';
@@ -11,16 +12,23 @@ export class AuthService {
 
     constructor(private requestService: RequestService) { }
 
-    public login(username: string, password: string): Observable<any> {
-        return this.requestService.post('/auth/login', { username, password });
+    public register(username: string, password: string): Observable<any> {
+        return this.requestService.post('/auth/register', { username, password });
     }
 
-    public isLoggedIn(): Observable<boolean> {
-        return this.requestService.get('/auth/verify');
+    public login(username: string, password: string): Observable<any> {
+        return this.requestService.post('/auth/login', { username, password })
+            .map(response => {
+                this.token = response.token;
+            });
     }
 
     public logout() {
         this.token = '';
+    }
+
+    public isLoggedIn(): Observable<boolean> {
+        return this.requestService.get('/auth/verify');
     }
 
     public getAuthorizationHeaderValue() {
