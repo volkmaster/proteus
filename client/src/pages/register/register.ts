@@ -16,8 +16,9 @@ import { LoginPage } from '../login/login';
 export class RegisterPage {
 
     public registerForm = this.formBuilder.group({
-        username: ['', [Validators.required, Validators.minLength(3)]],
-        password: ['', [Validators.required, Validators.minLength(6)]]
+        username     : ['', [Validators.required, Validators.minLength(3)]],
+        password     : ['', [Validators.required, Validators.minLength(6)]],
+        passwordConf : ['', [Validators.required, Validators.minLength(6)]]
     });
     public validationMessages = {
         username: {
@@ -38,12 +39,7 @@ export class RegisterPage {
     ) { }
 
     ionViewDidEnter() {
-        this.authService.isLoggedIn().subscribe((loggedIn: boolean) => {
-            if (loggedIn) {
-                this.navCtrl.push(FiltersPage);
-            }
-            this.registerForm.valueChanges.subscribe(() => this.onValueChanged());
-        });
+        this.registerForm.valueChanges.subscribe(() => this.onValueChanged());
     }
 
     public register() {
@@ -54,6 +50,10 @@ export class RegisterPage {
             error => {
                 console.log(error);
             });
+    }
+
+    public toLogin() {
+        this.navCtrl.setRoot(LoginPage);
     }
 
     private onValueChanged() {
