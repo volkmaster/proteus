@@ -3,7 +3,7 @@ import { NavController } from 'ionic-angular';
 import { Platform } from 'ionic-angular';
 
 // Services
-import { FilterService } from '../../providers/filter.service';
+import { RouteService } from '../../providers/route.service';
 
 // Pages
 import { HomePage } from '../home/home';
@@ -20,13 +20,18 @@ export class FiltersPage {
 	public width = 0;
 	public offset = 0;
 	public progressBarUnit = 0;
-	public currentProgress = 0;
+    public currentProgress = 0;
+
+    // Image names and their mapped categories
     public images = ['cerkev', 'domacija', 'freska', 'grad', 'kozolec', 'kulinarika', 'najdisce'];
+    public imageCategories = ['church', 'regional', 'art', 'castle', 'kozolec', 'culinary', 'archeological'];
+
+    private preferences: Array<any> = [];
 
     constructor(
         private navCtrl: NavController,
         private platform: Platform,
-        private filterService: FilterService
+        private routeService: RouteService
     ) {
         platform.ready().then(readySource => {
             this.width = platform.width();
@@ -41,10 +46,26 @@ export class FiltersPage {
         this.navCtrl.push(HomePage);
     }
 
-    nextQuestion(counter: number) {
+    nextQuestion(idname: string) {
   	    this.questionCounter++;
 
+        // Setting filters
+        switch (this.questionCounter) {
+            case 1:
+                this.routeService.setTravelDuration(idname);
+                break;
+            case 2:
+                this.routeService.setTravelMethod(idname);
+                break;
+            default:
+                if(idname !== 'den'){
+                    this.preferences.push(this.imageCategories[this.questionCounter - 3]);
+                }
+                break;
+        }
+
         if (this.questionCounter === this.questionsNumber - 1) {
+            this.routeService.setPreferences(this.preferences);
             this.navCtrl.push(DashboardPage);
         }
 

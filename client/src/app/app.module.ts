@@ -15,7 +15,7 @@ import { AuthService } from '../providers/auth.service';
 import { EnvironmentService } from '../providers/environment.service';
 import { HttpService } from '../providers/http.service';
 import { RequestService } from '../providers/request.service';
-import { FilterService } from '../providers/filter.service';
+import { RouteService } from '../providers/route.service';
 import { GeoService } from '../providers/geo.service';
 import { LocalStorageService } from '../providers/local-storage.service';
 import { ToastService } from '../providers/toast.service';
@@ -78,7 +78,7 @@ import { ListComponent } from '../components/list-component';
         EnvironmentService,
         HttpService,
         RequestService,
-        FilterService,
+        RouteService,
         GeoService,
         LocalStorageService,
         ToastService

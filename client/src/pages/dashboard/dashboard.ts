@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { Platform } from 'ionic-angular';
+import { LaunchNavigator } from '@ionic-native/launch-navigator';
 
 // Services
-import { FilterService } from '../../providers/filter.service';
+import { RouteService } from '../../providers/route.service';
 
 // Pages
 import { HomePage } from '../home/home';
@@ -16,17 +17,23 @@ import { QrCodePage } from '../qr-code/qr-code';
 })
 export class DashboardPage {
 
-    public loading = true;
+    public loading = false;
+
+    private transportMap = {
+        1: 'driving',
+        2: 'walking',
+        3: 'bicycling',
+        4: 'transit'
+    }
 
     constructor(
         private navCtrl: NavController,
-        private filterService: FilterService
+        private routeService: RouteService,
+        private launchNavigator: LaunchNavigator,
     ) { }
 
     ionViewDidLoad() {
-        setTimeout(() => {
-            this.loading = false;
-        }, 100);
+        console.log(this.routeService.getRouteObject());
     }
 
     public goToHome() {
@@ -34,7 +41,7 @@ export class DashboardPage {
     }
 
     public goToMaps() {
-        this.navCtrl.push(MapsPage);
+
     }
 
     public goToQrCode() {
