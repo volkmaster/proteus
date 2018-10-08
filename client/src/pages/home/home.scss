@@ -5,7 +5,7 @@ page-home {
         display         : flex;
         align-items     : center;
         flex-direction  : column;
-        background      : $tory-blue url('../../assets/imgs/home.jpg') no-repeat fixed center top;
+        background      : $tory-blue url('../assets/imgs/home.jpg') no-repeat fixed center top;
         background-size : cover;
 
         .logo {

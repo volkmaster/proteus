@@ -5,7 +5,7 @@
     [right]="{ text: 'ODJAVA', action: 'logout', color: '#FFCCCC' }">
 </header-component>
 <div *ngIf="loading" class="content">
-    <img class="loader" src="../../assets/imgs/spinner_white.svg"/>
+    <img class="loader" src="assets/imgs/spinner_white.svg"/>
 </div>
 <div *ngIf="!loading" class="content">
     <div class="questions-wrapper" [style.transform]="'translateX(-' + offset + 'px)'">
@@ -13,15 +13,15 @@
             <div class="question-text">Duration of your trip:</div>
             <div class="answer-wrapper">
                 <div class="button-answer button-answer-50 button-vertical-content" (click)="setTravelDuration('morning')">
-                    <img class="time-icon" src="../../assets/imgs/icon_morning.svg">
+                    <img class="time-icon" src="assets/imgs/icon_morning.svg">
                     <div>MORNING</div>
                 </div>
                 <div class="button-answer button-answer-50 button-vertical-content" (click)="setTravelDuration('evening')">
-                    <img class="time-icon" src="../../assets/imgs/icon_afternoon.svg">
+                    <img class="time-icon" src="assets/imgs/icon_afternoon.svg">
                     <div>AFTERNOON</div>
                 </div>
                 <div class="button-answer button-answer-100 button-vertical-content" (click)="setTravelDuration('day')">
-                    <img class="time-icon" src="../../assets/imgs/icon_all_day.svg">
+                    <img class="time-icon" src="assets/imgs/icon_all_day.svg">
                     <div>WHOLE DAY</div>
                 </div>
             </div>
@@ -31,30 +31,30 @@
             <div class="question-text">Travelling by:</div>
             <div class="answer-wrapper">
                 <div class="button-answer button-answer-50" (click)="setTravelMethod('public_transport')">
-                    <img class="travel-icon" src="../../assets/imgs/icon_bus.svg">
+                    <img class="travel-icon" src="assets/imgs/icon_bus.svg">
                 </div>
                 <div class="button-answer button-answer-50" (click)="setTravelMethod('car')">
-                    <img class="travel-icon" src="../../assets/imgs/icon_car.svg">
+                    <img class="travel-icon" src="assets/imgs/icon_car.svg">
                 </div>
                 <div class="button-answer button-answer-50" (click)="setTravelMethod('bicycle')">
-                    <img class="travel-icon" src="../../assets/imgs/icon_bike.svg">
+                    <img class="travel-icon" src="assets/imgs/icon_bike.svg">
                 </div>
                 <div class="button-answer button-answer-50" (click)="setTravelMethod('foot')">
-                    <img class="travel-icon" src="../../assets/imgs/icon_shoe.svg">
+                    <img class="travel-icon" src="assets/imgs/icon_shoe.svg">
                 </div>
             </div>
         </div>
 
         <div class="question-element-wrapper" *ngFor="let filter of filters">
             <div class="question-image">
-                <img [src]="'../../assets/imgs/' + images[filter] + '.jpg'"/>
+                <img [src]="'assets/imgs/' + images[filter] + '.jpg'"/>
             </div>
             <div class="answer-wrapper">
                 <div class="button-answer button-answer-50" (click)="nextQuestion()">
-                    <img class="preference-icon" src="../../assets/imgs/x.svg">
+                    <img class="preference-icon" src="assets/imgs/x.svg">
                 </div>
                 <div class="button-answer button-answer-50" (click)="addPreference(filter)">
-                    <img class="preference-icon" src="../../assets/imgs/heart.svg">
+                    <img class="preference-icon" src="assets/imgs/heart.svg">
                 </div>
             </div>
         </div>

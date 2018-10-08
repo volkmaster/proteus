@@ -1,5 +1,5 @@
 <div class="header" [style.background]="background">
     <div class="text text--left" [style.color]="left.color" (click)="performAction(left.action)">{{ left.text }}</div>
-    <img *ngIf="logo.visible" class="logo" (click)="performAction(logo.action)" [src]="'../../../assets/imgs/logo_small_' + logo.theme + '.svg'">
+    <img *ngIf="logo.visible" class="logo" (click)="performAction(logo.action)" [src]="'assets/imgs/logo_small_' + logo.theme + '.svg'">
     <div class="text text-right" [style.color]="right.color" (click)="performAction(right.action)">{{ right.text }}</div>
 </div>

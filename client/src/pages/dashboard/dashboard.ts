@@ -101,7 +101,7 @@ export class DashboardPage {
                 startTime: '9:00',
                 endTime: null,
                 sound: null,
-                icon: '../../assets/imgs/icon_home.svg'
+                icon: '../assets/imgs/icon_home.svg'
             },
             {
                 title: 'Domačija Žuniči',
@@ -109,8 +109,8 @@ export class DashboardPage {
                 startTime: '10:40',
                 endTime: '11:40',
                 sound: null,
-                icon: '../../assets/imgs/icon_farm.svg',
-                image: '../../assets/imgs/zunici.jpg'
+                icon: '../assets/imgs/icon_farm.svg',
+                image: '../assets/imgs/zunici.jpg'
             },
             {
                 title: 'Semič - Cerkev sv. Štefana',
@@ -118,7 +118,7 @@ export class DashboardPage {
                 startTime: '12:00',
                 endTime: '13:00',
                 sound: null,
-                icon: '../../assets/imgs/icon_church.svg'
+                icon: '../assets/imgs/icon_church.svg'
             },
             {
                 title: 'Gostišče Kapušin',
@@ -126,7 +126,7 @@ export class DashboardPage {
                 startTime: '13:15',
                 endTime: '14:45',
                 sound: null,
-                icon: '../../assets/imgs/icon_food.svg'
+                icon: '../assets/imgs/icon_food.svg'
             },
             {
                 title: 'Semič - Razvaline gradu Smuk',
@@ -134,7 +134,7 @@ export class DashboardPage {
                 startTime: '15:00',
                 endTime: '16:00',
                 sound: null,
-                icon: '../../assets/imgs/icon_castle.svg'
+                icon: '../assets/imgs/icon_castle.svg'
             },
             {
                 title: 'Črnomelj - Arheološko najdišče Pastoralni center',
@@ -142,7 +142,7 @@ export class DashboardPage {
                 startTime: '16:10',
                 endTime: '17:10',
                 sound: null,
-                icon: '../../assets/imgs/icon_archeology.svg'
+                icon: '../assets/imgs/icon_archeology.svg'
             },
             {
                 title: 'Hotel Slon',
@@ -150,7 +150,7 @@ export class DashboardPage {
                 startTime: '18:40',
                 endTime: null,
                 sound: null,
-                icon: '../../assets/imgs/icon_home.svg'
+                icon: '../assets/imgs/icon_home.svg'
             }
         ],
         [
@@ -160,7 +160,7 @@ export class DashboardPage {
                 startTime: '9:00',
                 endTime: null,
                 sound: null,
-                icon: '../../assets/imgs/icon_church.svg'
+                icon: '../assets/imgs/icon_church.svg'
             },
             {
                 title: 'Cerkev sv. Jožefa',
@@ -168,7 +168,7 @@ export class DashboardPage {
                 startTime: '9:15',
                 endTime: '9:45',
                 sound: null,
-                icon: '../../assets/imgs/icon_church.svg'
+                icon: '../assets/imgs/icon_church.svg'
             },
             {
                 title: 'Cerkev sv. Nikolaja',
@@ -176,7 +176,7 @@ export class DashboardPage {
                 startTime: '10:05',
                 endTime: '10:35',
                 sound: null,
-                icon: '../../assets/imgs/icon_church.svg'
+                icon: '../assets/imgs/icon_church.svg'
             },
             {
                 title: 'Palača Kazina',
@@ -184,8 +184,8 @@ export class DashboardPage {
                 startTime: '10:45',
                 endTime: '11:45',
                 sound: 'uniqueId1',
-                icon: '../../assets/imgs/icon_castle.svg',
-                image: '../../assets/imgs/kazina.jpg'
+                icon: '../assets/imgs/icon_castle.svg',
+                image: '../assets/imgs/kazina.jpg'
             },
             {
                 title: 'Frančiškanski samostan',
@@ -193,7 +193,7 @@ export class DashboardPage {
                 startTime: '11:50',
                 endTime: '12:20',
                 sound: null,
-                icon: '../../assets/imgs/icon_church.svg'
+                icon: '../assets/imgs/icon_church.svg'
             },
             {
                 title: 'Semenišče - Ljubljanska Tržnica',
@@ -201,7 +201,7 @@ export class DashboardPage {
                 startTime: '13:30',
                 endTime: null,
                 sound: null,
-                icon: '../../assets/imgs/icon_church.svg'
+                icon: '../assets/imgs/icon_church.svg'
             }
         ]
     ];

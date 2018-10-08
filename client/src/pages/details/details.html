@@ -5,19 +5,19 @@
     [right]="{ text: 'ODJAVA', action: 'logout', color: '#FFCCCC' }">
 </header-component>
 <div *ngIf="loading" class="content-wrapper">
-    <img class="loader" src="../../assets/imgs/spinner_white.svg"/>
+    <img class="loader" src="assets/imgs/spinner_white.svg"/>
 </div>
 <div *ngIf="!loading" class="content-wrapper">
     <div class="content">
         <div class="top">
-            <img class="close-icon" src="../../assets/imgs/icon_close.png" (click)="close()">
+            <img class="close-icon" src="assets/imgs/icon_close.png" (click)="close()">
             <h1 class="title">{{ object?.title }}</h1>
         </div>
         <div *ngIf="object?.image" class="image-wrapper">
-            <img [src]="'../../assets/imgs/' + object.image"/>
+            <img [src]="'assets/imgs/' + object.image"/>
         </div>
         <div *ngIf="object?.sound" class="sound-wrapper" (click)="playAudio()">
-            <img class="play-icon" src="../../assets/imgs/icon_play.png"/>
+            <img class="play-icon" src="assets/imgs/icon_play.png"/>
         </div>
         <p class="description">{{ object?.description }}</p>
     </div>
