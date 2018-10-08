@@ -39,7 +39,7 @@ export class FiltersPage {
         private authService: AuthService,
         private routeService: RouteService
     ) {
-        platform.ready().then(readySource => {
+        this.platform.ready().then(readySource => {
             this.width = platform.width();
         });
     }

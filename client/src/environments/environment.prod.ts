@@ -1,3 +1,3 @@
 export const environmentProd = {
-    apiUrl: 'http://localhost:3000/api'
+    apiUrl: 'https://proteus.eu-gb.mybluemix.net/api'
 };

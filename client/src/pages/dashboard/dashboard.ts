@@ -9,7 +9,6 @@ import { ToastService } from '../../providers/toast.service';
 
 // Pages
 import { LoginPage } from '../login/login';
-import { HomePage } from '../home/home';
 import { QrCodePage } from '../qr-code/qr-code';
 
 @Component({

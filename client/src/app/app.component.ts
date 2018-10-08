@@ -20,9 +20,9 @@ export class MyApp {
         private splashScreen: SplashScreen,
         private nativeAudio: NativeAudio
     ) {
-        platform.ready().then(() => {
-            statusBar.styleDefault();
-            splashScreen.hide();
+        this.platform.ready().then(() => {
+            this.statusBar.styleDefault();
+            this.splashScreen.hide();
 
             this.nativeAudio.preloadSimple('uniqueId1', 'assets/sounds/kazina.mp3');
         });

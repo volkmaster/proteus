@@ -8,7 +8,6 @@ import { ToastService } from '../../providers/toast.service';
 
 // Pages
 import { LoginPage } from '../login/login';
-import { DashboardPage } from '../dashboard/dashboard';
 
 @Component({
     selector: 'page-details',

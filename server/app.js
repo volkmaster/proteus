@@ -1,9 +1,10 @@
+import 'babel-polyfill'
+
 import dotenv from 'dotenv'
 dotenv.config()
 
 import express from 'express'
 import mongoose from 'mongoose'
-import 'babel-polyfill'
 import http from 'http'
 import cors from 'cors'
 import cookieParser from 'cookie-parser'
