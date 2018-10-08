@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { Platform } from 'ionic-angular';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/forkJoin';
 
 // Services
 import { AuthService } from '../../providers/auth.service';
@@ -49,28 +47,33 @@ export class FiltersPage {
     ionViewDidLoad() {
         this.loading = true;
 
-        Observable.forkJoin([
-            this.authService.getUser(),
-            this.routeService.getFilters()
-        ]).subscribe(
-            (responses: any[]) => {
-                const [user, filters] = responses;
+        this.authService.getUser().subscribe(
+            (user: any) => {
                 this.username = user.username.toUpperCase();
+            },
+            (error: any) => {
+                if (error.status === 401) {
+                    this.authService.logout();
+                    this.navCtrl.setRoot(LoginPage);
+                }
+            }
+        );
+
+        this.routeService.getFilters().subscribe(
+            (filters: string[]) => {
                 this.filters = filters;
 
                 this.totalQuestions += this.filters.length;
-                this.progressBarUnit = this.width / this.totalQuestions;
+                this.progressBarUnit = this.width / (this.totalQuestions + 1);
                 this.currentProgress = this.progressBarUnit;
 
                 this.loading = false;
             },
-            (errors: any[]) => {
-                const statuses = errors.map(error => error.status);
-                if (statuses.indexOf(401) >= 0) {
+            (error: any) => {
+                if (error.status === 401) {
                     this.authService.logout();
                     this.navCtrl.setRoot(LoginPage);
                 }
-                this.loading = false;
             }
         );
     }

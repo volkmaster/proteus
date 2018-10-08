@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, Platform } from 'ionic-angular';
 import { LaunchNavigator } from '@ionic-native/launch-navigator';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/forkJoin';
 
 // Services
 import { AuthService } from '../../providers/auth.service';
@@ -36,19 +34,25 @@ export class DashboardPage {
     ionViewDidLoad() {
         this.loading = true;
 
-        Observable.forkJoin([
-            this.authService.getUser(),
-            this.routeService.getRoute()
-        ]).subscribe(
-            (responses: any[]) => {
-                const [user, route] = responses;
+        this.authService.getUser().subscribe(
+            (user: any) => {
                 this.username = user.username.toUpperCase();
+            },
+            (error: any) => {
+                if (error.status === 401) {
+                    this.authService.logout();
+                    this.navCtrl.setRoot(LoginPage);
+                }
+            }
+        );
+
+        this.routeService.getRoute().subscribe(
+            (route: any[]) => {
                 this.route = route;
                 this.loading = false;
             },
-            (errors: any[]) => {
-                const statuses = errors.map(error => error.status);
-                if (statuses.indexOf(401) >= 0) {
+            (error: any) => {
+                if (error.status === 401) {
                     this.authService.logout();
                     this.navCtrl.setRoot(LoginPage);
                 }
