@@ -17,7 +17,7 @@ export class DetailsPage {
 
     public loading = false;
     public username = '';
-    public object: any = null;
+    public object = null;
 
     constructor(
         private navCtrl: NavController,
@@ -28,21 +28,7 @@ export class DetailsPage {
     ) { }
 
     ionViewDidLoad() {
-        this.loading = true;
-
-        this.authService.getUser().subscribe(
-            (user: any) => {
-                this.username = user.username.toUpperCase();
-                this.loading = false;
-            },
-            (error: any) => {
-                if (error.status === 401) {
-                    this.authService.logout();
-                    this.navCtrl.setRoot(LoginPage);
-                }
-                this.loading = false;
-            }
-        );
+        this.username = 'TINA';
 
         if (this.navParams.get('location')) {
             this.object = this.navParams.get('location');

@@ -18,6 +18,10 @@ page-details {
                     position : absolute;
                     top      : 5px;
                     right    : 20px;
+
+                    &:hover, &:focus, &:active {
+                        filter: brightness(150%);
+                    }
                 }
 
                 .title {

@@ -48,15 +48,6 @@ export class RegisterPage {
     ) { }
 
     ionViewDidEnter() {
-        this.loading = true;
-
-        this.authService.isLoggedIn().subscribe((loggedIn: boolean) => {
-            if (loggedIn) {
-                this.navCtrl.push(HomePage);
-            }
-            this.loading = false;
-        });
-
         this.registerForm.valueChanges.subscribe(() => this.onValueChanged());
     }
 
@@ -65,20 +56,7 @@ export class RegisterPage {
             return;
         }
 
-        this.loading = true;
-
-        this.authService.register(this.registerForm.value.username, this.registerForm.value.password).subscribe(
-            (data: any) => {
-                this.navCtrl.push(LoginPage, { message: 'Registration was successful. Please log in with your username and password.' });
-                this.loading = false;
-            },
-            (error: any) => {
-                if (error.status === 400) {
-                    this.error = error.error;
-                    this.loading = false;
-                }
-            }
-        );
+        this.navCtrl.push(LoginPage, { message: 'Registration was successful. Please log in with your username and password.' });
     }
 
     public goToLogin() {

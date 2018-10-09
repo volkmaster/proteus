@@ -22,11 +22,19 @@ page-dashboard {
             .button-google-maps {
                 margin-top       : 10px;
                 background-color : $pomegranate;
+
+                &:hover, &:focus, &:active {
+                    background-color: $eucalyptus;
+                }
             }
 
             .button-qr-code {
                 margin           : 20px 0;
-                background-color : $eucalyptus;
+                background-color : $pomegranate;
+
+                &:hover, &:focus, &:active {
+                    background-color: $eucalyptus;
+                }
             }
         }
     }

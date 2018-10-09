@@ -31,33 +31,13 @@ export class DashboardPage {
     ) { }
 
     ionViewDidLoad() {
-        this.loading = true;
+        this.username = 'TINA';
 
-        this.authService.getUser().subscribe(
-            (user: any) => {
-                this.username = user.username.toUpperCase();
-            },
-            (error: any) => {
-                if (error.status === 401) {
-                    this.authService.logout();
-                    this.navCtrl.setRoot(LoginPage);
-                }
-            }
-        );
+        this.route = this.routes[0];
 
-        this.routeService.getRoute().subscribe(
-            (route: any[]) => {
-                this.route = route;
-                this.loading = false;
-            },
-            (error: any) => {
-                if (error.status === 401) {
-                    this.authService.logout();
-                    this.navCtrl.setRoot(LoginPage);
-                }
-                this.loading = false;
-            }
-        );
+        setTimeout(() => {
+            this.loading = false;
+        }, 3000);
     }
 
     public launchGoogleMaps() {
@@ -96,21 +76,15 @@ export class DashboardPage {
     public routes = [
         [
             {
-                title: 'Hotel Slon',
-                description: '',
-                startTime: '9:00',
-                endTime: null,
-                sound: null,
-                icon: '../assets/imgs/icon_home.svg'
-            },
-            {
                 title: 'Domačija Žuniči',
                 description: 'Skupina objektov je nepremična kulturna in profana stavbna dediščina s sredine 19. stoletja in je tudi info center parka. Domačija stoji ob glavni cesti Marindol-Vinica.',
                 startTime: '10:40',
                 endTime: '11:40',
                 sound: null,
-                icon: '../assets/imgs/icon_farm.svg',
-                image: '../assets/imgs/zunici.jpg'
+                icon: 'farm',
+                image: 'zunici.jpg',
+                latitude: 45.4820395636,
+                longitude: 15.3601041269
             },
             {
                 title: 'Semič - Cerkev sv. Štefana',
@@ -118,7 +92,10 @@ export class DashboardPage {
                 startTime: '12:00',
                 endTime: '13:00',
                 sound: null,
-                icon: '../assets/imgs/icon_church.svg'
+                icon: 'church',
+                image: null,
+                latitude: 45.651998999,
+                longitude: 15.1814262322
             },
             {
                 title: 'Gostišče Kapušin',
@@ -126,7 +103,10 @@ export class DashboardPage {
                 startTime: '13:15',
                 endTime: '14:45',
                 sound: null,
-                icon: '../assets/imgs/icon_food.svg'
+                icon: 'food',
+                image: null,
+                latitude: 45.5896409,
+                longitude: 15.1951953
             },
             {
                 title: 'Semič - Razvaline gradu Smuk',
@@ -134,7 +114,10 @@ export class DashboardPage {
                 startTime: '15:00',
                 endTime: '16:00',
                 sound: null,
-                icon: '../assets/imgs/icon_castle.svg'
+                icon: 'castle',
+                image: null,
+                latitude: 45.6615786604,
+                longitude: 15.1778127409
             },
             {
                 title: 'Črnomelj - Arheološko najdišče Pastoralni center',
@@ -142,15 +125,10 @@ export class DashboardPage {
                 startTime: '16:10',
                 endTime: '17:10',
                 sound: null,
-                icon: '../assets/imgs/icon_archeology.svg'
-            },
-            {
-                title: 'Hotel Slon',
-                description: '',
-                startTime: '18:40',
-                endTime: null,
-                sound: null,
-                icon: '../assets/imgs/icon_home.svg'
+                icon: 'archeology',
+                image: null,
+                latitude: 45.5692514463,
+                longitude: 15.1926258969
             }
         ],
         [
@@ -160,7 +138,10 @@ export class DashboardPage {
                 startTime: '9:00',
                 endTime: null,
                 sound: null,
-                icon: '../assets/imgs/icon_church.svg'
+                icon: 'church',
+                image: null,
+                latitude: 0,
+                longitude: 0
             },
             {
                 title: 'Cerkev sv. Jožefa',
@@ -168,7 +149,10 @@ export class DashboardPage {
                 startTime: '9:15',
                 endTime: '9:45',
                 sound: null,
-                icon: '../assets/imgs/icon_church.svg'
+                icon: 'church',
+                image: null,
+                latitude: 0,
+                longitude: 0
             },
             {
                 title: 'Cerkev sv. Nikolaja',
@@ -176,7 +160,10 @@ export class DashboardPage {
                 startTime: '10:05',
                 endTime: '10:35',
                 sound: null,
-                icon: '../assets/imgs/icon_church.svg'
+                icon: 'church',
+                image: null,
+                latitude: 0,
+                longitude: 0
             },
             {
                 title: 'Palača Kazina',
@@ -184,8 +171,10 @@ export class DashboardPage {
                 startTime: '10:45',
                 endTime: '11:45',
                 sound: 'uniqueId1',
-                icon: '../assets/imgs/icon_castle.svg',
-                image: '../assets/imgs/kazina.jpg'
+                icon: 'castle',
+                image: 'kazina.jpg',
+                latitude: 0,
+                longitude: 0
             },
             {
                 title: 'Frančiškanski samostan',
@@ -193,7 +182,10 @@ export class DashboardPage {
                 startTime: '11:50',
                 endTime: '12:20',
                 sound: null,
-                icon: '../assets/imgs/icon_church.svg'
+                icon: 'church',
+                image: null,
+                latitude: 0,
+                longitude: 0
             },
             {
                 title: 'Semenišče - Ljubljanska Tržnica',
@@ -201,7 +193,10 @@ export class DashboardPage {
                 startTime: '13:30',
                 endTime: null,
                 sound: null,
-                icon: '../assets/imgs/icon_church.svg'
+                icon: 'church',
+                image: null,
+                latitude: 0,
+                longitude: 0
             }
         ]
     ];

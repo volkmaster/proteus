@@ -26,6 +26,10 @@ page-home {
             color            : $pink;
             font-size        : 38px;
             font-family      : $font-bold;
+
+            &:hover, &:focus, &:active {
+                background-color: $eucalyptus;
+            }
         }
     }
 }

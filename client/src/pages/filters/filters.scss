@@ -49,6 +49,10 @@ page-filters {
                         .preference-icon {
                             width: 60px;
                         }
+
+                        &:hover, &:focus, &:active {
+                            background-color: $eucalyptus;
+                        }
                     }
 
                     .button-answer-50 {

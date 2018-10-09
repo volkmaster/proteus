@@ -53,6 +53,11 @@ page-login, page-register {
                     color            : $pomegranate;
                     font-size        : 38px;
                     font-family      : $font-bold;
+
+                    &:hover, &:focus, &:active {
+                        background-color : $eucalyptus;
+                        color            : $mandys-pink;
+                    }
                 }
 
                 .error {

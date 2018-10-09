@@ -45,37 +45,17 @@ export class FiltersPage {
     }
 
     ionViewDidLoad() {
-        this.loading = true;
+        this.username = 'TINA';
 
-        this.authService.getUser().subscribe(
-            (user: any) => {
-                this.username = user.username.toUpperCase();
-            },
-            (error: any) => {
-                if (error.status === 401) {
-                    this.authService.logout();
-                    this.navCtrl.setRoot(LoginPage);
-                }
-            }
-        );
+        this.filters = ['church', 'museum', 'regional', 'archeological', 'historical'];
 
-        this.routeService.getFilters().subscribe(
-            (filters: string[]) => {
-                this.filters = filters;
+        this.totalQuestions += this.filters.length;
+        this.progressBarUnit = this.width / (this.totalQuestions + 1);
+        this.currentProgress = this.progressBarUnit;
 
-                this.totalQuestions += this.filters.length;
-                this.progressBarUnit = this.width / (this.totalQuestions + 1);
-                this.currentProgress = this.progressBarUnit;
-
-                this.loading = false;
-            },
-            (error: any) => {
-                if (error.status === 401) {
-                    this.authService.logout();
-                    this.navCtrl.setRoot(LoginPage);
-                }
-            }
-        );
+        setTimeout(() => {
+            this.loading = false;
+        }, 1000);
     }
 
     public setTravelDuration(travelDuration: string) {

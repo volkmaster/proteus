@@ -25,21 +25,11 @@ export class HomePage {
     ) { }
 
     ionViewDidLoad() {
-        this.loading = true;
+        this.username = 'TINA';
 
-        this.authService.getUser().subscribe(
-            (user: any) => {
-                this.username = user.username.toUpperCase();
-                this.loading = false;
-            },
-            (error: any) => {
-                if (error.status === 401) {
-                    this.authService.logout();
-                    this.navCtrl.setRoot(LoginPage);
-                }
-                this.loading = false;
-            }
-        );
+        setTimeout(() => {
+            this.loading = false;
+        }, 1000);
 
         this.routeService.resetRoute();
     }

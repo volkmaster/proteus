@@ -15,10 +15,10 @@ import { RegisterPage } from '../register/register';
 })
 export class LoginPage {
 
-    public loading = true;
+    public loading = false;
     public loginForm = this.formBuilder.group({
-        username: ['', [Validators.required]],
-        password: ['', [Validators.required]]
+        username: ['tina', [Validators.required]],
+        password: ['test123', [Validators.required]]
     });
     public validationMessages = {
         username: {
@@ -38,15 +38,6 @@ export class LoginPage {
     ) { }
 
     ionViewDidEnter() {
-        this.loading = true;
-
-        this.authService.isLoggedIn().subscribe((loggedIn: boolean) => {
-            if (loggedIn) {
-                this.navCtrl.push(HomePage);
-            }
-            this.loading = false;
-        });
-
         this.loginForm.valueChanges.subscribe(() => this.onValueChanged());
     }
 
@@ -59,24 +50,7 @@ export class LoginPage {
             return;
         }
 
-        this.loading = true;
-
-        this.authService.login(this.loginForm.value.username, this.loginForm.value.password).subscribe(
-            (data: any) => {
-                this.navCtrl.push(LoginPage);
-                this.loading = false;
-            },
-            (error: any) => {
-                if (error.status === 400) {
-                    this.error = error.error;
-                }
-                this.loading = false;
-            }
-        );
-    }
-
-    public logout() {
-        this.authService.logout();
+        this.navCtrl.push(HomePage);
     }
 
     public goToRegister() {
