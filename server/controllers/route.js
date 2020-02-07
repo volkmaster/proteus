@@ -40,8 +40,6 @@ router.post('/', async (req, res, next) => {
         // Generate a route with the given parameters
         const nodes = await routeLogic.generateRoute(params)
 
-        debugger;
-
         // Save the route
         route = await routeLogic.create({ nodes })
         user.routes.push(route)

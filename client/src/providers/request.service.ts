@@ -67,6 +67,7 @@ export class RequestService {
                         } else {
                             message = error.error;
                         }
+                        break;
                     default:
                         message = error.error;
                         break;
